@@ -5,7 +5,7 @@
 
 // 全局应用状态
 const state = {
-  concertIndex: [],       // 从 data/concerts-index.json 加载的索引列表
+  concertIndex: [],       // 从 data/concerts-index.json 或 bundle 加载的索引列表
   activeConcertId: null,  // 当前激活的音乐会 ID
   concertCache: {},       // 缓存已拉取的单场音乐会数据 { id: data }
   activeSessionIndex: 0,  // 当前场次索引 (如上半场/下半场，第一场/第二场)
@@ -46,10 +46,18 @@ async function initApp() {
   setupAudioPlayerEvents();
 
   try {
-    // 1. 读取总目录索引
-    const res = await fetch('data/concerts-index.json');
-    if (!res.ok) throw new Error(`HTTP ${res.status} 加载索引失败`);
-    state.concertIndex = await res.json();
+    // 优先读取本地注入数据 (完美兼容本地 Finder 双击 file:// 协议直接打开，免受现代浏览器 CORS 策略拦截)
+    if (window.__CONCERTS_INDEX__ && Array.isArray(window.__CONCERTS_INDEX__) && window.__CONCERTS_INDEX__.length > 0) {
+      state.concertIndex = window.__CONCERTS_INDEX__;
+      if (window.__CONCERTS_DATA__) {
+        state.concertCache = { ...window.__CONCERTS_DATA__ };
+      }
+    } else {
+      // 线上环境或未注入 bundle 时使用 fetch 异步加载
+      const res = await fetch('data/concerts-index.json');
+      if (!res.ok) throw new Error(`HTTP ${res.status} 加载索引失败`);
+      state.concertIndex = await res.json();
+    }
 
     if (!state.concertIndex || state.concertIndex.length === 0) {
       showEmptyState('暂无已归档的音乐会数据');
@@ -102,30 +110,34 @@ async function loadConcert(concertId) {
   state.activeConcertId = concertId;
   state.activeSessionIndex = 0;
 
-  // 检查前端缓存
+  // 检查前端缓存或本地注入数据
   if (!state.concertCache[concertId]) {
-    const meta = state.concertIndex.find(c => c.id === concertId);
-    const jsonPath = meta ? meta.file : `data/concerts/${concertId}.json`;
-    
-    // 显示加载中状态
-    dom.worksContainer.innerHTML = `
-      <div class="py-20 text-center text-parchment-500 dark:text-zinc-400 font-serif">
-        <div class="inline-block animate-spin rounded-full h-8 w-8 border-2 border-accentGold-500 border-t-transparent mb-3"></div>
-        <p class="text-sm">正在载入《${meta ? meta.title : '音乐会研习指南'}》学术档案...</p>
-      </div>
-    `;
-
-    try {
-      const res = await fetch(jsonPath);
-      if (!res.ok) throw new Error(`HTTP ${res.status} 未找到数据文件`);
-      state.concertCache[concertId] = await res.json();
-    } catch (err) {
+    if (window.__CONCERTS_DATA__ && window.__CONCERTS_DATA__[concertId]) {
+      state.concertCache[concertId] = window.__CONCERTS_DATA__[concertId];
+    } else {
+      const meta = state.concertIndex.find(c => c.id === concertId);
+      const jsonPath = meta ? meta.file : `data/concerts/${concertId}.json`;
+      
+      // 显示加载中状态
       dom.worksContainer.innerHTML = `
-        <div class="p-6 rounded-xl bg-red-500/10 border border-red-500/30 text-red-700 dark:text-red-400 text-sm">
-          ⚠️ 无法加载该场音乐会数据（${err.message}）。请检查该 JSON 文件是否存在。
+        <div class="py-20 text-center text-parchment-500 dark:text-zinc-400 font-serif">
+          <div class="inline-block animate-spin rounded-full h-8 w-8 border-2 border-accentGold-500 border-t-transparent mb-3"></div>
+          <p class="text-sm">正在载入《${meta ? meta.title : '音乐会研习指南'}》学术档案...</p>
         </div>
       `;
-      return;
+
+      try {
+        const res = await fetch(jsonPath);
+        if (!res.ok) throw new Error(`HTTP ${res.status} 未找到数据文件`);
+        state.concertCache[concertId] = await res.json();
+      } catch (err) {
+        dom.worksContainer.innerHTML = `
+          <div class="p-6 rounded-xl bg-red-500/10 border border-red-500/30 text-red-700 dark:text-red-400 text-sm">
+            ⚠️ 无法加载该场音乐会数据（${err.message}）。请检查该 JSON 文件是否存在。
+          </div>
+        `;
+        return;
+      }
     }
   }
 
@@ -301,7 +313,7 @@ function renderSessionContent() {
         </div>
         <div class="col-span-2">
           <span class="text-parchment-500 dark:text-zinc-400 block text-[10px] font-mono">配器 / 编制 (SCORING)</span>
-          <span class="font-medium text-parchment-800 dark:text-[#EAECEF] truncate block" title="${w.instrumentation || ''}">${w.instrumentation || '钢琴独奏'}</span>
+          <span class="font-medium text-parchment-800 dark:text-[#EAECEF] truncate block" title="${w.instrumentation || ''}">${w.instrumentation || '标准交响乐团'}</span>
         </div>
       </div>
 
