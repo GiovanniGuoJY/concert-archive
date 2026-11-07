@@ -9,7 +9,18 @@
     "city": "中国 · 深圳",
     "title": "贝多芬钢琴协奏曲全套研习指南",
     "subTitle": "Beethoven: The Complete Piano Concertos Study Guide",
-    "featuredArtist": "格哈德·奥皮茨 / 袁芳 / 林大叶"
+    "featuredArtist": "格哈德·奥皮茨 / 袁芳 / 林大叶",
+    "status": "upcoming",
+    "worksCount": 5,
+    "hasAudio": false,
+    "programTags": [
+      "第一钢协 Op.15",
+      "第二钢协 Op.19",
+      "第三钢协 Op.37",
+      "第四钢协 Op.58",
+      "第五钢协“皇帝” Op.73"
+    ],
+    "shortDesc": "一日贯通贝多芬五部钢琴协奏曲史诗全集，林大叶执棒深交联袂奥皮茨与袁芳。"
   },
   {
     "id": "sz-marathon-2027",
@@ -21,7 +32,23 @@
     "city": "中国 · 深圳",
     "title": "小提琴协奏曲马拉松研习指南",
     "subTitle": "Violin Concerto All-Day Marathon Study Guide",
-    "featuredArtist": "朱利安·拉赫林 (Julian Rachlin)"
+    "featuredArtist": "朱利安·拉赫林 (Julian Rachlin)",
+    "status": "upcoming",
+    "worksCount": 10,
+    "hasAudio": false,
+    "programTags": [
+      "巴赫 E大调",
+      "莫扎特 第五“土耳其”",
+      "门德尔松 Op.64",
+      "贝多芬 Op.61",
+      "普罗科菲耶夫 第二",
+      "柴可夫斯基 Op.35",
+      "勃拉姆斯 Op.77",
+      "贝尔格 天使",
+      "西贝柳斯 Op.47",
+      "肖斯塔科维奇 第一"
+    ],
+    "shortDesc": "全天三场十部小提琴协奏曲巅峰马拉松，拉赫林与深圳交响乐团一日全景呈现。"
   },
   {
     "id": "mutter-rpo-gz-2026",
@@ -33,7 +60,16 @@
     "city": "中国 · 广州",
     "title": "安妮-索菲·穆特与英国皇家爱乐乐团音乐会研习指南",
     "subTitle": "Anne-Sophie Mutter & Royal Philharmonic Orchestra Study Guide",
-    "featuredArtist": "安妮-索菲·穆特 (Anne-Sophie Mutter)"
+    "featuredArtist": "安妮-索菲·穆特 (Anne-Sophie Mutter)",
+    "status": "upcoming",
+    "worksCount": 3,
+    "hasAudio": false,
+    "programTags": [
+      "巴特沃斯《什罗普郡少年》狂想曲",
+      "门德尔松 E小调小提琴协奏曲",
+      "贝多芬 第五交响曲“命运”"
+    ],
+    "shortDesc": "小提琴女皇安妮-索菲·穆特携手英国皇家爱乐乐团，呈现英伦田园挽歌、门德尔松浪漫巅峰与贝多芬命运凯歌。"
   },
   {
     "id": "zimerman-recital-2026",
@@ -45,6 +81,17 @@
     "city": "中国 · 深圳",
     "title": "克里斯蒂安·齐默尔曼钢琴独奏会研习档案",
     "subTitle": "Krystian Zimerman Piano Recital Study Guide",
-    "featuredArtist": "克里斯蒂安·齐默尔曼 (Krystian Zimerman)"
+    "featuredArtist": "克里斯蒂安·齐默尔曼 (Krystian Zimerman)",
+    "status": "past",
+    "worksCount": 19,
+    "hasAudio": true,
+    "audioCount": 24,
+    "programTags": [
+      "贝多芬《悲怆》Op.13",
+      "贝多芬《黎明》Op.53",
+      "八组大调向关系小调色彩微雕（巴赫/肖邦/德彪西/拉赫等17首名曲）",
+      "舒伯特即兴曲返场"
+    ],
+    "shortDesc": "当今世界乐坛传奇钢琴巨匠齐默尔曼中国巡演深圳站。前半程贝多芬早期向成熟期跃升两座丰碑，后半程严谨呈现八组调性色彩轴线微雕。"
   }
 ]

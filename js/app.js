@@ -10,8 +10,16 @@ const state = {
   concertCache: {},       // 缓存已拉取的单场音乐会数据 { id: data }
   activeSessionIndex: 0,  // 当前场次索引 (如上半场/下半场，第一场/第二场)
   isCheatSheetMode: false,// 是否处于 30 秒速查模式
+  fontSize: 'standard',   // 字号调节状态 ('standard' | 'medium' | 'large')
   currentAudio: null,     // 当前播放中的音频对象信息
 };
+
+// 字号档位配置
+const FONT_SIZES = [
+  { id: 'standard', label: '标准', size: '16px' },
+  { id: 'medium', label: '放大', size: '18px' },
+  { id: 'large', label: '特大', size: '20px' }
+];
 
 // DOM 元素引用
 const dom = {
@@ -21,6 +29,8 @@ const dom = {
   sessionsTabList: document.getElementById('sessionsTabList'),
   worksPillsContainer: document.getElementById('worksPillsContainer'),
   worksContainer: document.getElementById('worksContainer'),
+  fontSizeBtn: document.getElementById('fontSizeBtn'),
+  fontSizeLabel: document.getElementById('fontSizeLabel'),
   cheatSheetBtn: document.getElementById('cheatSheetBtn'),
   cheatSheetLabel: document.getElementById('cheatSheetLabel'),
   readProgress: document.getElementById('readProgress'),
@@ -42,6 +52,7 @@ const dom = {
  */
 async function initApp() {
   initTheme();
+  initFontSize();
   setupScrollProgress();
   setupAudioPlayerEvents();
 
@@ -71,16 +82,46 @@ async function initApp() {
       return keyB.localeCompare(keyA);
     });
 
-    // 2. 渲染顶部下拉选单
+    // 2. 检查 URL 参数或 hash 锚定目标音乐会 (如 detail.html?id=zimerman-recital-2026)
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialId = urlParams.get('id') || (window.location.hash ? window.location.hash.replace(/^#/, '') : null);
+    const targetConcert = (initialId && state.concertIndex.find(c => c.id === initialId)) || state.concertIndex[0];
+
+    // 3. 渲染顶部下拉选单并激活对应项
+    state.activeConcertId = targetConcert.id;
     renderConcertSelector();
 
-    // 3. 默认加载第一场音乐会（最新一场）
-    const defaultConcert = state.concertIndex[0];
-    await loadConcert(defaultConcert.id);
+    // 4. 加载目标音乐会详情
+    await loadConcert(targetConcert.id);
   } catch (err) {
     console.error('初始化失败:', err);
     showEmptyState(`数据加载异常: ${err.message}`);
   }
+}
+
+/**
+ * 字号调节系统
+ */
+function initFontSize() {
+  const saved = localStorage.getItem('concert_archive_font_size') || 'standard';
+  setFontSize(saved);
+}
+
+function setFontSize(sizeId) {
+  const target = FONT_SIZES.find(f => f.id === sizeId) || FONT_SIZES[0];
+  state.fontSize = target.id;
+  document.documentElement.setAttribute('data-font-size', target.id);
+  document.documentElement.style.fontSize = target.size;
+  if (dom.fontSizeLabel) {
+    dom.fontSizeLabel.textContent = target.label;
+  }
+  localStorage.setItem('concert_archive_font_size', target.id);
+}
+
+function cycleFontSize() {
+  const currentIdx = FONT_SIZES.findIndex(f => f.id === state.fontSize);
+  const nextIdx = (currentIdx + 1) % FONT_SIZES.length;
+  setFontSize(FONT_SIZES[nextIdx].id);
 }
 
 /**
@@ -146,11 +187,11 @@ async function loadConcert(concertId) {
 }
 
 /**
- * 切换子场次 (如上半场/下半场、第一场/第二场)
+ * 切换子场次 (如多场次马拉松的场次切换)
  */
 function switchSession(sessIdx) {
   state.activeSessionIndex = sessIdx;
-  renderSessionTabs();     // 关键修复：即时重新渲染选项卡高亮态
+  renderSessionTabs();     // 即时重新渲染选项卡高亮态
   renderSessionContent();  // 渲染该场次的曲目内容与子导航
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -186,16 +227,17 @@ function renderSessionTabs() {
 
 /**
  * 渲染音乐会主视图 (Banner + Tabs + 内容)
+ * 仅保留演出演出基本信息（时间、场地、演奏者），去除冗余推荐性长篇大论
  */
 function renderConcertView() {
   const concert = state.concertCache[state.activeConcertId];
   if (!concert) return;
 
-  // 1. 渲染 Master Banner
+  // 1. 渲染 Master Banner：紧凑清晰的演出与阵容信息，不堆砌推介评述
   dom.masterBanner.innerHTML = `
-    <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-parchment-200 dark:border-obsidian-800 pb-3.5 mb-3.5">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
       <div>
-        <div class="flex items-center gap-2 mb-1">
+        <div class="flex items-center gap-2 mb-1.5">
           <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-mono font-semibold bg-accentGold-500/15 text-accentGold-700 dark:text-accentGold-400">
             ${concert.date}
           </span>
@@ -206,11 +248,11 @@ function renderConcertView() {
         <h1 class="text-xl sm:text-2xl font-serif font-bold tracking-tight text-parchment-900 dark:text-zinc-100">
           ${concert.title}
         </h1>
-        <p class="font-serif italic text-xs sm:text-sm text-parchment-600 dark:text-zinc-400">
+        <p class="font-serif italic text-xs sm:text-sm text-parchment-600 dark:text-zinc-400 mt-0.5">
           ${concert.subTitle || ''}
         </p>
       </div>
-      <div class="flex flex-wrap md:flex-col gap-x-4 gap-y-1 text-xs text-parchment-700 dark:text-zinc-300 bg-parchment-50 dark:bg-obsidian-950/80 p-2.5 rounded-xl border border-parchment-200 dark:border-obsidian-800 shrink-0">
+      <div class="flex flex-wrap md:flex-col gap-x-4 gap-y-1.5 text-xs text-parchment-700 dark:text-zinc-300 bg-parchment-50 dark:bg-obsidian-950/80 p-2.5 rounded-xl border border-parchment-200 dark:border-obsidian-800 shrink-0">
         ${(concert.artists || []).map(a => `
           <div class="flex items-baseline gap-1.5">
             <span class="text-[10px] uppercase font-mono text-accentGold-700 dark:text-accentGold-400 font-bold">${a.role}:</span>
@@ -219,9 +261,6 @@ function renderConcertView() {
         `).join('')}
       </div>
     </div>
-    <p class="text-xs text-parchment-700 dark:text-zinc-300 font-serif leading-relaxed">
-      ${concert.overview || ''}
-    </p>
   `;
 
   // 2. 底部栏概览信息
@@ -241,25 +280,23 @@ function renderConcertView() {
 function renderSessionContent() {
   const concert = state.concertCache[state.activeConcertId];
   if (!concert || !concert.sessions) return;
-  const session = concert.sessions[state.activeSessionIndex] || concert.sessions[0];
+  const sessions = concert.sessions || [];
+  const session = sessions[state.activeSessionIndex] || sessions[0];
   if (!session) return;
 
-  // 场次主题横幅
-  if (session.sessionTheme || session.description) {
+  // 多场次活动时展示简明场次标识；单场音乐会直接进入曲目，不展示多余的推广引言
+  if (sessions.length > 1 && (session.sessionName || session.sessionTheme)) {
     dom.sessionIntroBanner.classList.remove('hidden');
     dom.sessionIntroBanner.innerHTML = `
-      <div class="flex items-baseline justify-between mb-1">
+      <div class="flex items-center justify-between">
         <span class="font-mono text-[11px] font-bold text-accentGold-700 dark:text-accentGold-400 uppercase tracking-wider">
-          场次研习 • ${session.sessionName || '全场'}
+          ${session.sessionName || `场次 0${state.activeSessionIndex + 1}`} ${session.time ? `• ${session.time}` : ''}
         </span>
-        <span class="text-xs text-parchment-500 dark:text-zinc-400">共 ${session.works.length} 部杰作</span>
+        <span class="text-xs text-parchment-500 dark:text-zinc-400">共 ${session.works.length} 部作品</span>
       </div>
-      <h2 class="text-base sm:text-lg font-serif font-bold text-parchment-900 dark:text-zinc-100">
+      <h2 class="text-sm sm:text-base font-serif font-bold text-parchment-900 dark:text-zinc-100 mt-1">
         ${session.sessionTheme || ''}
       </h2>
-      <p class="text-xs text-parchment-700 dark:text-zinc-300 font-serif leading-relaxed mt-1">
-        ${session.description || ''}
-      </p>
     `;
   } else {
     dom.sessionIntroBanner.classList.add('hidden');
@@ -282,8 +319,8 @@ function renderSessionContent() {
       <div class="border-b border-parchment-100 dark:border-obsidian-800 pb-3.5 mb-4">
         <div class="flex items-center justify-between text-xs text-accentGold-700 dark:text-accentGold-400 font-mono mb-1">
           <span>曲目 0${wIdx + 1} / 0${session.works.length}</span>
-          <span class="bg-accentGold-500/10 px-2 py-0.5 rounded-full text-[11px]">
-            ⏱ ${w.duration || '时长未录入'}
+          <span class="bg-accentGold-500/10 px-2.5 py-0.5 rounded-full text-[11px] font-mono">
+            ⏱ 全曲 ${w.duration || '时长未录入'}
           </span>
         </div>
         
@@ -301,19 +338,23 @@ function renderSessionContent() {
         </div>
       </div>
 
-      <!-- 作品规格元数据 -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 p-2.5 rounded-xl bg-parchment-100/70 dark:bg-obsidian-950 border border-parchment-200/60 dark:border-obsidian-800 text-[11px] mb-4">
+      <!-- 作品规格元数据 (配器与编制完全展开折行展示，不使用打点折叠) -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 p-3 rounded-xl bg-parchment-100/70 dark:bg-obsidian-950 border border-parchment-200/60 dark:border-obsidian-800 text-[11px] mb-4">
         <div>
           <span class="text-parchment-500 dark:text-zinc-400 block text-[10px] font-mono">调性 (KEY)</span>
-          <span class="font-semibold text-parchment-800 dark:text-[#EAECEF]">${w.key || '无'}</span>
+          <span class="font-semibold text-parchment-800 dark:text-[#EAECEF] break-words">${w.key || '无'}</span>
         </div>
         <div>
           <span class="text-parchment-500 dark:text-zinc-400 block text-[10px] font-mono">创作年代 (ERA)</span>
-          <span class="font-semibold text-parchment-800 dark:text-[#EAECEF]">${w.year || '不详'}</span>
+          <span class="font-semibold text-parchment-800 dark:text-[#EAECEF] break-words">${w.year || '不详'}</span>
         </div>
         <div class="col-span-2">
-          <span class="text-parchment-500 dark:text-zinc-400 block text-[10px] font-mono">配器 / 编制 (SCORING)</span>
-          <span class="font-medium text-parchment-800 dark:text-[#EAECEF] truncate block" title="${w.instrumentation || ''}">${w.instrumentation || '标准交响乐团'}</span>
+          <span class="text-parchment-500 dark:text-zinc-400 block text-[10px] font-mono">参考全曲时长 (DURATION)</span>
+          <span class="font-semibold text-parchment-800 dark:text-[#EAECEF]">${w.duration || '时长未录入'}</span>
+        </div>
+        <div class="col-span-2 sm:col-span-4 pt-2 border-t border-parchment-200/60 dark:border-obsidian-800/80">
+          <span class="text-parchment-500 dark:text-zinc-400 block text-[10px] font-mono mb-0.5">配器 / 编制 (SCORING)</span>
+          <span class="font-medium text-parchment-800 dark:text-[#EAECEF] break-words whitespace-normal leading-relaxed block">${w.instrumentation || '标准交响乐团'}</span>
         </div>
       </div>
 
@@ -362,10 +403,10 @@ function renderSessionContent() {
           </div>
         ` : ''}
 
-        <!-- 分乐章结构拆解与录音试听 -->
+        <!-- 分乐章结构拆解与录音试听 (标题完整换行展示，呈现乐章预计时长) -->
         <div class="pt-1">
           <h4 class="text-[11px] font-mono font-bold uppercase tracking-wider text-parchment-500 dark:text-zinc-400 mb-2">
-            ${w.movements && w.movements.length > 1 ? '分乐章结构与音乐学拆解 (MOVEMENT BREAKDOWN)' : '曲式架构与音乐学解析 (ANALYSIS & SECTIONS)'}
+            ${w.movements && w.movements.length > 1 ? '分乐章结构与音乐学拆解 (MOVEMENT BREAKDOWN)' : '曲式架构与音乐学深度导赏 (ANALYSIS & SECTIONS)'}
           </h4>
           
           <div class="space-y-2.5">
@@ -380,20 +421,25 @@ function renderSessionContent() {
 
               return `
                 <details class="group rounded-xl border border-parchment-200 dark:border-obsidian-800 bg-parchment-50/80 dark:bg-obsidian-850 p-3 text-xs" open>
-                  <summary class="cursor-pointer font-serif font-bold text-sm text-parchment-900 dark:text-[#F9FAFB] flex items-center justify-between select-none">
-                    <div class="flex items-center gap-2 min-w-0">
+                  <summary class="cursor-pointer font-serif font-bold text-sm text-parchment-900 dark:text-[#F9FAFB] flex items-start sm:items-center justify-between gap-3 select-none py-0.5">
+                    <div class="flex flex-wrap items-baseline gap-2 min-w-0 flex-1">
                       ${m.num ? `
                         <span class="px-2 py-0.5 rounded bg-accentGold-500/15 text-accentGold-700 dark:text-accentGold-300 font-mono text-xs font-bold shrink-0">
                           ${m.num}
                         </span>
                       ` : ''}
-                      <span class="truncate">${m.tempo}</span>
+                      <span class="break-words font-semibold text-xs sm:text-sm leading-snug">${m.tempo}</span>
+                      ${m.duration ? `
+                        <span class="text-[10px] sm:text-[11px] font-mono font-normal text-accentGold-700 dark:text-accentGold-400 bg-accentGold-500/10 px-2 py-0.5 rounded-full shrink-0">
+                          ⏱ ${m.duration}
+                        </span>
+                      ` : ''}
                     </div>
 
-                    <div class="flex items-center gap-2 shrink-0">
+                    <div class="flex items-center gap-2 shrink-0 pt-0.5 sm:pt-0">
                       <!-- 录音试听控制钮 -->
                       ${hasAudio ? `
-                        <button type="button" onclick="playMovementAudio(event, '${trackJson}')" class="px-2 py-0.5 rounded-full bg-accentGold-500/20 hover:bg-accentGold-500 text-accentGold-800 dark:text-accentGold-300 hover:text-white dark:hover:text-obsidian-950 font-sans text-[11px] font-medium flex items-center gap-1 transition-all">
+                        <button type="button" onclick="playMovementAudio(event, '${trackJson}')" class="px-2.5 py-0.5 rounded-full bg-accentGold-500/20 hover:bg-accentGold-500 text-accentGold-800 dark:text-accentGold-300 hover:text-white dark:hover:text-obsidian-950 font-sans text-[11px] font-medium flex items-center gap-1 transition-all">
                           <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M4.5 3.5v13l11-6.5-11-6.5z"/></svg>
                           <span>录音</span>
                         </button>
@@ -409,12 +455,13 @@ function renderSessionContent() {
                   
                   <div class="mt-2.5 pt-2.5 border-t border-parchment-200/80 dark:border-obsidian-800 space-y-2">
                     <div class="flex flex-wrap gap-x-4 gap-y-1 text-[11px]">
+                      ${m.duration ? `<span class="text-parchment-600 dark:text-zinc-400">预计时长: <strong class="text-accentGold-700 dark:text-accentGold-300 font-mono font-semibold">${m.duration}</strong></span>` : ''}
                       ${m.meter ? `<span class="text-parchment-600 dark:text-zinc-400">节拍: <strong class="text-parchment-900 dark:text-[#F3F4F6] font-sans font-semibold">${m.meter}</strong></span>` : ''}
                       ${m.form ? `<span class="text-parchment-600 dark:text-zinc-400">曲式架构: <strong class="text-accentGold-700 dark:text-accentGold-300 font-sans font-semibold">${m.form}</strong></span>` : ''}
                       ${m.affekt ? `<span class="text-parchment-600 dark:text-zinc-400">情态表情: <strong class="text-parchment-900 dark:text-[#F3F4F6] font-serif italic">${m.affekt}</strong></span>` : ''}
                     </div>
                     
-                    <div class="p-3 rounded-lg bg-parchment-100/90 dark:bg-obsidian-950 border border-parchment-200/70 dark:border-obsidian-800 text-xs text-parchment-800 dark:text-[#E2E8F0] font-serif leading-relaxed">
+                    <div class="p-3.5 rounded-lg bg-parchment-100/90 dark:bg-obsidian-950 border border-parchment-200/70 dark:border-obsidian-800 text-xs sm:text-sm text-parchment-800 dark:text-[#E2E8F0] font-serif leading-relaxed text-justify space-y-2">
                       ${m.highlights}
                     </div>
                   </div>

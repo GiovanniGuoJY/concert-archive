@@ -8,102 +8,91 @@
   <script src="js/tailwind-config.js"></script>
   <link rel="stylesheet" href="css/styles.css">
 </head>
-<body class="bg-parchment-50 text-parchment-900 dark:bg-obsidian-950 dark:text-[#EAECEF] font-sans antialiased transition-colors duration-200 min-h-screen pb-28">
+<body class="bg-parchment-50 text-parchment-900 dark:bg-obsidian-950 dark:text-[#EAECEF] font-sans antialiased transition-colors duration-200 min-h-screen flex flex-col justify-between">
 
-  <div id="readProgress" class="fixed top-0 left-0 h-[2px] bg-gradient-to-r from-accentGold-600 via-accentGold-400 to-amber-200 z-50 transition-all duration-100" style="width: 0%;"></div>
-
+  <!-- 顶部全局导航栏 -->
   <header class="sticky top-0 z-40 bg-parchment-50/95 dark:bg-obsidian-900/95 backdrop-blur-md border-b border-parchment-200 dark:border-obsidian-800">
-    <div class="max-w-4xl mx-auto px-4 py-2.5 flex items-center justify-between gap-2">
-      <div class="relative flex-1 min-w-0 max-w-sm sm:max-w-md">
-        <label for="concertSelect" class="block text-[10px] font-mono tracking-wider uppercase text-accentGold-600 dark:text-accentGold-400 font-bold">
-          音乐会研习档案 / SELECT CONCERT
-        </label>
-        <div class="relative mt-0.5">
-          <select id="concertSelect" onchange="handleConcertChange(this.value)" class="w-full appearance-none bg-parchment-100 dark:bg-obsidian-800 border border-parchment-300 dark:border-zinc-700/80 rounded-lg pl-2.5 pr-8 py-1.5 text-xs sm:text-sm font-medium text-parchment-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-accentGold-500/50 cursor-pointer truncate">
-            <option>正在载入音乐会目录...</option>
-          </select>
-          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-parchment-500 dark:text-zinc-400 text-xs">▾</div>
+    <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-accentGold-500"></span>
+        <div>
+          <span class="block text-xs sm:text-sm font-serif font-bold text-parchment-900 dark:text-zinc-100 tracking-tight">
+            音乐会研习档案
+          </span>
+          <span class="block text-[9px] font-mono tracking-widest uppercase text-accentGold-700 dark:text-accentGold-400">
+            Concert Repertoire Archive
+          </span>
         </div>
       </div>
 
-      <div class="flex items-center space-x-2 pt-3">
-        <button id="cheatSheetBtn" onclick="toggleCheatSheet()" title="切换30秒极速速查" class="px-2.5 py-1.5 text-xs rounded-lg border border-parchment-300 dark:border-zinc-700 bg-parchment-100 dark:bg-obsidian-800 text-parchment-800 dark:text-zinc-200 hover:text-accentGold-600 dark:hover:text-accentGold-400 flex items-center gap-1 transition-all active:scale-95">
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-          <span class="text-[11px] font-medium" id="cheatSheetLabel">速查</span>
+      <div class="flex items-center space-x-1.5 sm:space-x-2">
+        <!-- 字号调节按钮 -->
+        <button id="fontSizeBtn" onclick="cycleFontSize()" title="切换字号大小 (标准 / 放大 / 特大)" class="px-2.5 py-1.5 text-xs rounded-lg border border-parchment-300 dark:border-zinc-700 bg-parchment-100 dark:bg-obsidian-800 text-parchment-800 dark:text-zinc-200 hover:text-accentGold-600 dark:hover:text-accentGold-400 flex items-center gap-1 transition-all active:scale-95">
+          <span class="font-serif font-bold text-xs tracking-tighter">Aa</span>
+          <span class="text-[10px] font-sans font-medium" id="fontSizeLabel">标准</span>
         </button>
 
+        <!-- 日夜主题切换 -->
         <button onclick="toggleDarkMode()" title="切换日夜模式" class="p-1.5 rounded-lg border border-parchment-300 dark:border-zinc-700 bg-parchment-100 dark:bg-obsidian-800 text-parchment-800 dark:text-zinc-200 hover:text-accentGold-500 transition-colors">
           <svg id="themeIconSun" class="w-4 h-4 hidden dark:block text-accentGold-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 9h-1m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
           <svg id="themeIconMoon" class="w-4 h-4 block dark:hidden text-parchment-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
         </button>
       </div>
     </div>
-
-    <div id="sessionsTabBar" class="max-w-4xl mx-auto px-3 border-t border-parchment-200 dark:border-obsidian-800 hidden">
-      <div id="sessionsTabList" class="flex gap-1.5 py-1.5 overflow-x-auto no-scrollbar text-xs"></div>
-    </div>
-
-    <div class="max-w-4xl mx-auto px-4 py-1.5 overflow-x-auto no-scrollbar flex items-center gap-2 border-t border-parchment-100 dark:border-obsidian-850 text-xs" id="worksPillsContainer"></div>
   </header>
 
-  <main class="max-w-4xl mx-auto px-3.5 sm:px-6 pt-4">
-    <section id="concertMasterBanner" class="mb-6 rounded-2xl p-4 sm:p-6 bg-parchment-100/90 dark:bg-obsidian-900 border border-parchment-200 dark:border-zinc-800 card-shadow transition-all">
-      <div class="animate-pulse space-y-3">
-        <div class="h-4 bg-parchment-300/60 dark:bg-zinc-800 rounded w-1/4"></div>
-        <div class="h-7 bg-parchment-300/60 dark:bg-zinc-800 rounded w-2/3"></div>
+  <!-- 首页主体 -->
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 pt-6 pb-12 w-full flex-1">
+    
+    <!-- 头部横幅与说明 -->
+    <section class="mb-8 rounded-2xl p-5 sm:p-7 bg-white dark:bg-obsidian-900 border border-parchment-200 dark:border-obsidian-800 card-shadow transition-all">
+      <div class="max-w-2xl">
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-accentGold-500/15 text-accentGold-700 dark:text-accentGold-400 uppercase tracking-wider mb-2">
+          学术级演出排练档案与曲目导赏
+        </span>
+        <h1 class="text-2xl sm:text-3xl font-serif font-bold text-parchment-900 dark:text-zinc-100 tracking-tight leading-snug">
+          音乐会研习与曲目赏析文库
+        </h1>
+        <p class="font-serif text-xs sm:text-sm text-parchment-600 dark:text-zinc-400 mt-2 leading-relaxed">
+          收录近期重点关注的现场音乐会排练与演奏档案。点击任意音乐会卡片，即可进入对应的学术研习指南正文，浏览曲式结构拆解、现场 30 秒听觉锚点与乐章现场实况录音。
+        </p>
+      </div>
+
+      <!-- 快速筛选分类 -->
+      <div class="flex items-center gap-2 mt-5 pt-4 border-t border-parchment-100 dark:border-obsidian-800/80">
+        <button id="filterAll" data-filter="all" onclick="setFilter('all')" class="px-3 py-1.5 rounded-lg text-xs font-serif font-bold bg-accentGold-500/20 text-accentGold-700 dark:text-accentGold-300 border border-accentGold-500/50 shadow-sm transition-all">
+          全部演出
+        </button>
+        <button id="filterUpcoming" data-filter="upcoming" onclick="setFilter('upcoming')" class="px-3 py-1.5 rounded-lg text-xs font-serif text-parchment-600 dark:text-zinc-400 hover:bg-parchment-200/60 dark:hover:bg-obsidian-800 border border-transparent transition-all">
+          待演音乐会 (正序 ↑)
+        </button>
+        <button id="filterPast" data-filter="past" onclick="setFilter('past')" class="px-3 py-1.5 rounded-lg text-xs font-serif text-parchment-600 dark:text-zinc-400 hover:bg-parchment-200/60 dark:hover:bg-obsidian-800 border border-transparent transition-all">
+          历史演出 (倒序 ↓)
+        </button>
       </div>
     </section>
 
-    <section id="sessionIntroBanner" class="mb-5 p-3.5 sm:p-4 rounded-xl bg-amberGold-500/5 dark:bg-obsidian-850 border border-accentGold-500/25 hidden"></section>
+    <!-- 动态音乐会列表容器 (按待演正序与历史倒序两大模块呈现) -->
+    <div id="homeContent">
+      <div class="py-16 text-center text-parchment-500 dark:text-zinc-400 font-serif">
+        <div class="inline-block animate-spin rounded-full h-8 w-8 border-2 border-accentGold-500 border-t-transparent mb-3"></div>
+        <p class="text-sm">正在载入音乐会档案文库...</p>
+      </div>
+    </div>
 
-    <div id="worksContainer" class="space-y-7"></div>
   </main>
 
-  <aside id="globalAudioBar" class="fixed bottom-12 left-3 right-3 sm:left-auto sm:right-6 sm:w-96 bg-parchment-100/95 dark:bg-obsidian-900/95 backdrop-blur-md border border-accentGold-500/40 rounded-2xl p-3 shadow-2xl z-50 hidden transition-all">
-    <audio id="mainAudioElement" class="hidden"></audio>
-    <div class="flex items-center justify-between mb-2">
-      <div class="min-w-0 pr-2">
-        <div class="flex items-center gap-1.5">
-          <span class="w-2 h-2 rounded-full bg-accentGold-500 animate-pulse"></span>
-          <span class="text-[10px] font-mono uppercase font-bold text-accentGold-700 dark:text-accentGold-400">现场录音回放</span>
-        </div>
-        <h4 id="audioTrackTitle" class="text-xs font-serif font-bold text-parchment-900 dark:text-zinc-100 truncate">曲目名称</h4>
-        <p id="audioTrackSubtitle" class="text-[11px] text-parchment-600 dark:text-zinc-400 truncate">乐章标记</p>
-      </div>
-      <button onclick="closeAudioBar()" title="收起播放器" class="text-parchment-400 dark:text-zinc-500 hover:text-parchment-800 dark:hover:text-zinc-200 p-1 text-sm">✕</button>
-    </div>
-
-    <div class="space-y-1">
-      <input id="audioProgressBar" type="range" min="0" max="100" value="0" class="w-full h-1 bg-parchment-300 dark:bg-obsidian-800 accent-accentGold-500 rounded-lg cursor-pointer">
-      <div class="flex items-center justify-between text-[10px] font-mono text-parchment-500 dark:text-zinc-400">
-        <span id="audioCurrentTime">0:00</span>
-        <button id="audioPlayPauseBtn" class="p-1 rounded-full bg-accentGold-500 text-white dark:text-obsidian-950 hover:bg-accentGold-600 transition-transform active:scale-90">
-          <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-        </button>
-        <span id="audioDuration">0:00</span>
-      </div>
-    </div>
-  </aside>
-
-  <div id="audioToast" class="fixed bottom-14 left-1/2 -translate-x-1/2 bg-obsidian-900/90 text-accentGold-300 px-3.5 py-1.5 rounded-full text-xs shadow-lg backdrop-blur-sm border border-accentGold-500/30 opacity-0 pointer-events-none transition-opacity duration-200 z-50 flex items-center gap-1.5">
-    <span>🎧 该乐章录音正在整理中，稍后归档上线</span>
-  </div>
-
-  <footer class="fixed bottom-0 left-0 right-0 bg-parchment-50/95 dark:bg-obsidian-900/95 border-t border-parchment-200 dark:border-obsidian-800 backdrop-blur-md px-4 py-2 z-40">
-    <div class="max-w-4xl mx-auto flex items-center justify-between text-xs">
-      <div class="flex items-center gap-2 min-w-0">
-        <span class="w-2 h-2 rounded-full bg-accentGold-500 shrink-0"></span>
-        <span id="footerConcertVenue" class="font-mono text-[11px] truncate text-parchment-700 dark:text-zinc-300">
-          音乐会研习与曲目赏析文库
-        </span>
-      </div>
-      <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="shrink-0 px-2.5 py-1 rounded-md bg-parchment-200 dark:bg-obsidian-800 text-parchment-800 dark:text-zinc-300 hover:text-accentGold-500 font-medium text-[11px] transition-colors">
-        ↑ 顶部
+  <!-- 底部版权信息 -->
+  <footer class="bg-parchment-100/80 dark:bg-obsidian-900/90 border-t border-parchment-200 dark:border-obsidian-800 py-4 px-4 text-center">
+    <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-parchment-600 dark:text-zinc-400 font-serif">
+      <p>古典音乐会研习与曲目赏析文库 · 纯静态数据解耦架构</p>
+      <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="text-accentGold-700 dark:text-accentGold-400 hover:underline text-[11px] font-sans font-medium">
+        ↑ 返回顶部
       </button>
     </div>
   </footer>
 
   <script src="data/concerts-bundle.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/home.js"></script>
 </body>
 </html>

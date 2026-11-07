@@ -8,7 +8,10 @@
   "title": "克里斯蒂安·齐默尔曼钢琴独奏会研习档案",
   "subTitle": "Krystian Zimerman Piano Recital Study Guide",
   "artists": [
-    { "role": "独奏 (钢琴)", "name": "克里斯蒂安·齐默尔曼 (Krystian Zimerman)" }
+    {
+      "role": "独奏 (钢琴)",
+      "name": "克里斯蒂安·齐默尔曼 (Krystian Zimerman)"
+    }
   ],
   "overview": "当今世界乐坛最具传奇色彩的钢琴巨匠齐默尔曼 2026 年中国巡演深圳站。前半程呈现贝多芬早期向成熟期跃升的两座丰碑——《悲怆》与《黎明》奏鸣曲；后半程精心构建了八组严格的“大调→关系小调”调性色彩轴线，将巴赫、肖邦、德彪西、拉赫玛尼诺夫、席曼诺夫斯基等 17 首跨越三百年的前奏曲与短篇名作严密串联为一体，终曲并以舒伯特即兴曲震撼返场。",
   "sessions": [
@@ -44,8 +47,9 @@
               "meter": "4/4 拍 转 2/2 拍",
               "form": "Sonata Form with Cyclical Introduction (带周期性慢板引子的奏鸣曲式)",
               "affekt": "悲壮崇高、火山喷发般的炽热戏剧性",
-              "highlights": "Grave 庄板以撕心裂肺的不协和和弦打破沉寂。随后的快板以急促的低音八度颤音伴随右手向上狂奔的火箭主题。慢引子在展开部和尾声前两次重现，将戏剧悬念拉至极限。",
-              "audioUrl": "release:v1.0-audio/01.Beethoven.Piano.Sonata.No.8.Op.13.Pathetique.Mvt.1.Grave.-.Allegro.di.molto.e.con.brio.mp3"
+              "highlights": "【曲式布局与动机发展】开篇 Grave 庄板以撕心裂肺的减七和弦撕破沉寂，带有法国序曲标志性的深刻附点节奏与低音半音阶下行。随后的 Allegro di molto e con brio 快板以急促的低音八度碎颤音托起向上狂奔的“曼海姆火箭”第一主题；副部出人意料地转入降E小调而非传统的降E大调，充满歌剧宣叙调般的戏剧张力。尤为革命性的是，慢板引子动机在展开部开端与尾声之前两次突兀重现，如同宿命阴云反复笼罩。【现场听觉锚点】注意齐默尔曼在极轻（pp）与突强（sf）之间如刀锋般锐利的动态控制，以及他在展开部中对多声部对位线条的层次剥离。",
+              "audioUrl": "release:v1.0-audio/01.Beethoven.Piano.Sonata.No.8.Op.13.Pathetique.Mvt.1.Grave.-.Allegro.di.molto.e.con.brio.mp3",
+              "duration": "约 9-10 分钟"
             },
             {
               "num": "II",
@@ -53,8 +57,9 @@
               "meter": "2/4 拍 (降A大调)",
               "form": "Ternary Form A-B-A (带变奏的三段体)",
               "affekt": "纯洁无瑕的抚慰、圣洁内省的灵魂独白",
-              "highlights": "右手在内声部中音区唱出如管弦乐大提琴般温厚的如歌主题。中段转入同主音降A小调，伴奏织体演变为剧烈的切分与三连音律动，再现部主部旋律重现时伴随着晶莹的三连音低音衬底。",
-              "audioUrl": "release:v1.0-audio/02.Beethoven.Piano.Sonata.No.8.Op.13.Pathetique.Mvt.2.Adagio.cantabile.mp3"
+              "highlights": "【曲式布局与和声意象】A-B-A 三段体结构的崇高圣咏。降A大调主部旋律被公认为钢琴文献中最具抚慰力量的如歌慢板（Cantabile），右手在温暖的中音区吟唱，内声部流动着细腻的十六分音符分解和弦，低音稳如磐石。中段转入同主音降A小调，伴奏织体演变为剧烈的切分重音与三连音暗涌，展现英雄内心的隐痛挣扎；随后再现部在晶莹的三连音低音衬底下重返宁静。【现场听觉锚点】屏息聆听齐默尔曼著名的触键重量控制——钢琴内声部维持若隐若现的伴奏柔光，让主旋律犹如大提琴独奏般浮悬于声场之中。",
+              "audioUrl": "release:v1.0-audio/02.Beethoven.Piano.Sonata.No.8.Op.13.Pathetique.Mvt.2.Adagio.cantabile.mp3",
+              "duration": "约 5 分钟"
             },
             {
               "num": "III",
@@ -62,8 +67,9 @@
               "meter": "2/2 拍 (C小调)",
               "form": "Sonata-Rondo Form (奏鸣回旋曲式 ABACABA)",
               "affekt": "敏捷不安的奔跑、宿命搏击的终局",
-              "highlights": "回旋曲主题直接脱胎于第一乐章副题的音程轮廓，既有洛可可的灵巧，又带着古典英雄主义的紧迫感。中段赋格风格的对位展开极富张力，尾声突然降A大调片刻闪烁后，以极速的下行琶音果决收场。",
-              "audioUrl": "release:v1.0-audio/03.Beethoven.Piano.Sonata.No.8.Op.13.Pathetique.Mvt.3.Rondo.Allegro.mp3"
+              "highlights": "【曲式布局与戏剧张力】奏鸣回旋曲式（ABACABA）。回旋曲主题的四音音程轮廓直接脱胎于第一乐章副部副题，形成了贝多芬早期典型的有机统一架构。插段穿插着复调对位赋格段落与充满阳光的降A大调歌唱，随后却以极度敏捷的下行琶音冲入疾风骤雨的尾声，在最后的狂怒和弦中决绝收拍。【现场听觉锚点】关注第三乐章在敏捷不安与古典节制之间的微妙平衡，左手跨八度的敏锐切分重音赋予全曲强烈的驱动力。",
+              "audioUrl": "release:v1.0-audio/03.Beethoven.Piano.Sonata.No.8.Op.13.Pathetique.Mvt.3.Rondo.Allegro.mp3",
+              "duration": "约 5 分钟"
             }
           ]
         },
@@ -92,8 +98,9 @@
               "meter": "4/4 拍 (C大调)",
               "form": "Symphonic Sonata Form (交响化奏鸣曲式)",
               "affekt": "生机勃勃、光芒四射的英雄律动",
-              "highlights": "以极轻（pp）的机械律动脉冲开篇，副题打破传统属调规则、大胆转入遥远的三度调 E大调圣咏，展现出贝多芬成熟期颠覆性的调性色彩布局。尾声展开部运用庞大的管弦乐式声响层叠推进。",
-              "audioUrl": "release:v1.0-audio/04.Beethoven.Piano.Sonata.No.21.Op.53.Waldstein.Mvt.1.Allegro.con.brio.mp3"
+              "highlights": "【曲式布局与音响革命】交响化奏鸣曲式。开篇以极轻（pp）的机械律动脉冲破土而出，犹如黎明破晓前大地深处的微颤，声响概念完全脱离了传统羽管键琴与早期击弦古钢琴的遗存。副部主题打破维也纳古典乐派回归属调（G大调）的刻板规则，大胆跃入遥远的三度调 E大调圣咏，展现出贝多芬成熟期颠覆性的调性色彩掌控。庞大的展开部在管弦乐般的交织声浪中推进。【现场听觉锚点】现场注意齐默尔曼对埃拉尔式现代大钢琴共鸣箱的极限开发，低音声部的引擎脉动与高音区如水波般的琶音交融出恢弘的宇宙声响。",
+              "audioUrl": "release:v1.0-audio/04.Beethoven.Piano.Sonata.No.21.Op.53.Waldstein.Mvt.1.Allegro.con.brio.mp3",
+              "duration": "约 11 分钟"
             },
             {
               "num": "II",
@@ -101,8 +108,9 @@
               "meter": "6/8 拍 (F大调)",
               "form": "Through-composed Lyrical Transition (通谱过渡引子)",
               "affekt": "幽暗沉思、神秘莫测的夜色冥想",
-              "highlights": "原慢板乐章因篇幅过巨被抽离为独立的《行板小品》（Andante favori）。这首留下的 Introduzione 篇幅短小却意境深邃，低音深沉的半音阶徘徊与上行叹息构筑出浓重的夜色，不间断（Attacca）直通破晓。",
-              "audioUrl": "release:v1.0-audio/05.Beethoven.Piano.Sonata.No.21.Op.53.Waldstein.Mvt.2.Introduzione.Adagio.molto.mp3"
+              "highlights": "【曲式布局与意境转换】通谱过渡引子（Introduzione: Adagio molto）。贝多芬因友人建议果断撤换了原本篇幅冗长宏大的慢乐章（后独立出版为《行板小品》WoO 57），改为这段仅 28 小节的玄秘冥想。低音沉重的半音阶摸索与上方声部若断若续的叹息动机交替对话，构建出极其静谧的夜色幻境，最终以长音属和弦不间断（Attacca）直通破晓。【现场听觉锚点】聆听从深邃暗夜到第一缕晨曦破土的音色跃迁，琴弦残响与空气共鸣在这里达到最高戏剧悬念。",
+              "audioUrl": "release:v1.0-audio/05.Beethoven.Piano.Sonata.No.21.Op.53.Waldstein.Mvt.2.Introduzione.Adagio.molto.mp3",
+              "duration": "约 4 分钟"
             },
             {
               "num": "III",
@@ -110,8 +118,9 @@
               "meter": "2/4 拍 转 6/8 拍 (C大调)",
               "form": "Monumental Sonata-Rondo (宏伟的奏鸣回旋曲式)",
               "affekt": "晨曦破晓、阳光普照大地的神圣欢愉",
-              "highlights": "贝多芬标注了著名的长踏板法（让低音主音与上方旋律融为一体的泛音光晕）。Prestissimo 急板尾声技巧艰深绝伦：双手连续高速八度滑奏（Glissando）与右手极高音区颤音，创造出如管风琴与整个交响乐团齐鸣的金色光芒。",
-              "audioUrl": "release:v1.0-audio/06.Beethoven.Piano.Sonata.No.21.Op.53.Waldstein.Mvt.3.Rondo.Allegretto.moderato.-.Prestissimo.mp3"
+              "highlights": "【曲式布局与键盘技术巅峰】宏伟的奏鸣回旋曲式。贝多芬在谱面上标注了震撼后世的“长踏板法”（Pedal blur），让低音长音与上方如歌的主题融为一片泛音金光。中段转入狂暴的 C小调俄罗斯风味舞曲。Prestissimo 急板尾声技巧艰深绝伦：双手连续高速八度滑奏（Glissando）与右手极高音区无休止的双音震音（Trill）同时进行，左手大跨度穿梭大跳，如同阿波罗驾驶太阳战车从地平线喷薄而出。【现场听觉锚点】目睹齐默尔曼在急速尾声中无瑕的八度下行与多声部颤音分离，展现人类钢琴键盘艺术的极限造诣。",
+              "audioUrl": "release:v1.0-audio/06.Beethoven.Piano.Sonata.No.21.Op.53.Waldstein.Mvt.3.Rondo.Allegretto.moderato.-.Prestissimo.mp3",
+              "duration": "约 10-11 分钟"
             }
           ]
         },
@@ -126,10 +135,23 @@
           "key": "C大调 (C major) → 轴线1起点",
           "year": "约 1900 年",
           "instrumentation": "钢琴独奏 (Solo Piano)",
-          "cheatSheet": ["波兰晚期浪漫主义珍宝：明净透亮的 C大调琶音，如晨钟敲响调性之旅的首个音符。"],
+          "cheatSheet": [
+            "波兰晚期浪漫主义珍宝：明净透亮的 C大调琶音，如晨钟敲响调性之旅的首个音符。"
+          ],
           "background": "波兰作曲家、华沙音乐学院教授，曾是青年席曼诺夫斯基的对位法导师。本曲充满纯正斯拉夫晚期浪漫主义的抒情气质。",
           "aesthetic": "温润典雅的沙龙诗意与开阔明净的和声流动。",
-          "movements": [{ "num": "", "tempo": "Moderato", "meter": "4/4 拍", "form": "Lyrical Miniature (单主题抒情微雕)", "affekt": "清澈典雅、春水初融", "highlights": "双手在 C大调和弦分解中交织出宽广的长线条，为微雕套曲树立首个白键调性基石。", "audioUrl": "release:v1.0-audio/07.Statkowski.Prelude.in.C.major.Op.37.No.1.mp3" }]
+          "movements": [
+            {
+              "num": "",
+              "tempo": "Moderato",
+              "meter": "4/4 拍",
+              "form": "Lyrical Miniature (单主题抒情微雕)",
+              "affekt": "清澈典雅、春水初融",
+              "highlights": "【调性轴线1起点：C大调】波兰晚期浪漫主义微雕典范。双手在明净透亮的 C大调琶音中层层展开，高声部唱出斯拉夫民族特有的温润抒情歌调。齐默尔曼在此以极其清澈典雅的触键叩开全场 17 首微雕前奏曲调性宇宙的大门。",
+              "audioUrl": "release:v1.0-audio/07.Statkowski.Prelude.in.C.major.Op.37.No.1.mp3",
+              "duration": "约 1.5 分钟"
+            }
+          ]
         },
         {
           "id": "bach-bwv846",
@@ -142,10 +164,23 @@
           "key": "C大调 (C major) → 轴线1枢纽",
           "year": "1722 年",
           "instrumentation": "钢琴独奏 (Solo Piano)",
-          "cheatSheet": ["西方音乐史的创世纪：35小节纯净如流水的琶音律动，齐默尔曼以极其均匀内敛的触键构筑几何神殿。"],
+          "cheatSheet": [
+            "西方音乐史的创世纪：35小节纯净如流水的琶音律动，齐默尔曼以极其均匀内敛的触键构筑几何神殿。"
+          ],
           "background": "巴赫《平均律键盘曲集》的开篇卷首曲，确立了十二平均律体系在器乐创作中的绝对统治地位。",
           "aesthetic": "纯粹理性的神圣建筑，去除一切世俗装饰的和声本源。",
-          "movements": [{ "num": "", "tempo": "Moderato / Con moto", "meter": "4/4 拍", "form": "Arpeggiated Figuration (琶音织体展开)", "affekt": "圣洁宁静、万物萌生的纯真秩序", "highlights": "每一个音型严谨循环，低音半音阶下行带来神圣的教堂回响，与前一首斯塔科夫斯基形成历史呼应。", "audioUrl": "release:v1.0-audio/08.Bach.Prelude.No.1.in.C.major.BWV.846.mp3" }]
+          "movements": [
+            {
+              "num": "",
+              "tempo": "Moderato / Con moto",
+              "meter": "4/4 拍",
+              "form": "Arpeggiated Figuration (琶音织体展开)",
+              "affekt": "圣洁宁静、万物萌生的纯真秩序",
+              "highlights": "【调性轴线1枢纽：C大调】巴赫《平均律键盘曲集》卷首曲。35 小节完全由分解和弦构筑的纯粹理性神殿，低音半音阶下行带来神圣的教堂回响。齐默尔曼采用极其均匀内敛的现代触键，洗净一切浪漫派多余的 rubato，呈现宇宙最初的和声秩序。",
+              "audioUrl": "release:v1.0-audio/08.Bach.Prelude.No.1.in.C.major.BWV.846.mp3",
+              "duration": "约 2 分钟"
+            }
+          ]
         },
         {
           "id": "scriabin-op11-2",
@@ -158,10 +193,23 @@
           "key": "A小调 (A minor) → 轴线1关系小调归宿",
           "year": "1895 - 1896 年",
           "instrumentation": "钢琴独奏 (Solo Piano)",
-          "cheatSheet": ["从纯阳的 C大调顺滑跌入其关系小调 A小调：忧郁如秋水涟漪，肖邦式的左手大跨度琶音伴随右手的叹息。"],
+          "cheatSheet": [
+            "从纯阳的 C大调顺滑跌入其关系小调 A小调：忧郁如秋水涟漪，肖邦式的左手大跨度琶音伴随右手的叹息。"
+          ],
           "background": "斯克里亚宾青年时期游历欧洲时仿效肖邦 Op. 28 构思的 24 首前奏曲集之一，带有浓郁的斯拉夫神秘忧郁。",
           "aesthetic": "神经质的纤细敏感与晚期浪漫派的病态美感。",
-          "movements": [{ "num": "", "tempo": "Mesto (忧伤地)", "meter": "3/4 拍", "form": "Ternary Miniature", "affekt": "感伤幽闭、如落叶飘零", "highlights": "左手连绵起伏的分解和弦托起右手充满下行二度叹息的歌唱线，完美收结第一组大调与关系小调的转换。", "audioUrl": "release:v1.0-audio/09.Scriabin.Prelude.in.A.minor.Op.11.No.2.mp3" }]
+          "movements": [
+            {
+              "num": "",
+              "tempo": "Mesto (忧伤地)",
+              "meter": "3/4 拍",
+              "form": "Ternary Miniature",
+              "affekt": "感伤幽闭、如落叶飘零",
+              "highlights": "【调性轴线1归宿：关系小调 A小调】斯克里亚宾青年时期游历欧洲时仿效肖邦构思的名篇。音乐从纯阳的 C大调毫无缝隙地滑入其关系小调 A小调。左手大跨度琶音伴随右手充满下行二度叹息的歌唱线，完美收束第一组调性转位。",
+              "audioUrl": "release:v1.0-audio/09.Scriabin.Prelude.in.A.minor.Op.11.No.2.mp3",
+              "duration": "约 2 分钟"
+            }
+          ]
         },
         {
           "id": "debussy-clair-de-lune",
@@ -174,10 +222,23 @@
           "key": "降D大调 (D-flat major) → 轴线2大调起点",
           "year": "1890 / 1905 年",
           "instrumentation": "钢琴独奏 (Solo Piano)",
-          "cheatSheet": ["印入人类集体潜意识的音诗：降D大调五黑键营造的温柔微光，中段琶音如湖面荡漾的银辉。"],
+          "cheatSheet": [
+            "印入人类集体潜意识的音诗：降D大调五黑键营造的温柔微光，中段琶音如湖面荡漾的银辉。"
+          ],
           "background": "灵感源自魏尔伦（Paul Verlaine）的同名诗作《月光》。德彪西在此将古典组曲形式与印象主义色彩配器完美融合。",
           "aesthetic": "象征主义诗意与印象派水光潋滟的光学映射。",
-          "movements": [{ "num": "", "tempo": "Andante très expressif (极富表现力的行板)", "meter": "9/8 拍", "form": "Ternary Song Form", "affekt": "朦胧超脱、清冷宁谧的银色月色", "highlights": "9/8拍的晃动节奏如同月下摇曳的波光，中段转入 Tempo rubato 掀起泛音涟漪，末尾在极高音区化作无声的静止。", "audioUrl": "release:v1.0-audio/10.Debussy.Clair.de.lune.from.Suite.bergamasque.L.75.No.3.mp3" }]
+          "movements": [
+            {
+              "num": "",
+              "tempo": "Andante très expressif (极富表现力的行板)",
+              "meter": "9/8 拍",
+              "form": "Ternary Song Form",
+              "affekt": "朦胧超脱、清冷宁谧的银色月色",
+              "highlights": "【调性轴线2起点：降D大调】德彪西印象主义标志性音诗。降D大调五个黑键天然散发着柔和而微凉的银色光泽。9/8 拍摇曳的节奏如水波荡漾，中段 Tempo rubato 掀起晶莹的琶音水花，尾声在极高音区化作无声的月色静止。",
+              "audioUrl": "release:v1.0-audio/10.Debussy.Clair.de.lune.from.Suite.bergamasque.L.75.No.3.mp3",
+              "duration": "约 5 分钟"
+            }
+          ]
         },
         {
           "id": "chopin-op28-16",
@@ -190,10 +251,23 @@
           "key": "降B小调 (B-flat minor) → 轴线2关系小调暴烈爆发",
           "year": "1838 - 1839 年（马略卡岛）",
           "instrumentation": "钢琴独奏 (Solo Piano)",
-          "cheatSheet": ["月光的温柔瞬间被狂暴撕裂！六记雷霆般的重音和弦引爆右手如火山熔岩喷涌的十六分音符绝技！"],
+          "cheatSheet": [
+            "月光的温柔瞬间被狂暴撕裂！六记雷霆般的重音和弦引爆右手如火山熔岩喷涌的十六分音符绝技！"
+          ],
           "background": "肖邦在马略卡岛法德摩萨修道院肺病恶化期间所作，被钢琴史公认为全套 24 首前奏曲中技巧与体力消耗最严苛的“地狱之曲”。降B小调正是前一首《月光》（降D大调）的关系小调。",
           "aesthetic": "狂暴绝望的生命挣扎与近乎癫狂的酒神风暴。",
-          "movements": [{ "num": "", "tempo": "Presto con fuoco (极其狂热的急板)", "meter": "2/2 拍", "form": "Perpetual Motion Étude (无穷动练习曲式)", "affekt": "暴烈摧枯拉朽、惊心动魄的飓风", "highlights": "右手长达上百小节无休止的高速半音阶音群横扫琴键，左手以顽固切分重音撕咬，最后以双手八度下砸撞线。", "audioUrl": "release:v1.0-audio/11.Chopin.Prelude.in.B-flat.minor.Op.28.No.16.mp3" }]
+          "movements": [
+            {
+              "num": "",
+              "tempo": "Presto con fuoco (极其狂热的急板)",
+              "meter": "2/2 拍",
+              "form": "Perpetual Motion Étude (无穷动练习曲式)",
+              "affekt": "暴烈摧枯拉朽、惊心动魄的飓风",
+              "highlights": "【调性轴线2爆发：关系小调 降B小调】肖邦在马略卡岛修道院肺病恶化期间写下的“地狱前奏曲”。六记雷霆般的重音和弦瞬间撕碎前一首《月光》的温柔，右手展开长达数十小节高速半音阶狂飙无穷动，以狂暴绝望的生命力量震撼撞线。",
+              "audioUrl": "release:v1.0-audio/11.Chopin.Prelude.in.B-flat.minor.Op.28.No.16.mp3",
+              "duration": "约 1.5 分钟"
+            }
+          ]
         },
         {
           "id": "godowsky-gardens-buitenzorg",
@@ -206,10 +280,23 @@
           "key": "降A大调 (A-flat major) → 轴线3大调起点",
           "year": "1924 - 1925 年",
           "instrumentation": "钢琴独奏 (Solo Piano)",
-          "cheatSheet": ["极度冷僻的高难炫技名篇：模仿印尼爪哇岛甘美兰（Gamelan）打击乐器的微音程泛音，复调声部多达四层！"],
+          "cheatSheet": [
+            "极度冷僻的高难炫技名篇：模仿印尼爪哇岛甘美兰（Gamelan）打击乐器的微音程泛音，复调声部多达四层！"
+          ],
           "background": "钢琴巨匠戈多夫斯基游历印尼爪哇岛后创作的划时代钢琴套曲。茂物植物园描绘了热带雨林中奇花异卉与异域昆虫振翅的超现实氛围。",
           "aesthetic": "东方主义微雕技法与西方极致多声部复调（Polyphony）在热带雨林中的奇幻交融。",
-          "movements": [{ "num": "", "tempo": "Allegretto grazioso e morbido", "meter": "3/4 拍", "form": "Exotic Character Piece", "affekt": "湿热氤氲、异香扑鼻的热带幻境", "highlights": "双手内声部同时维持复杂的复节拍律动，高音区闪烁着金属打击乐甘美兰般的晶莹音色。", "audioUrl": "release:v1.0-audio/12.Godowsky.The.Gardens.of.Buitenzorg.from.Java.Suite.No.8.mp3" }]
+          "movements": [
+            {
+              "num": "",
+              "tempo": "Allegretto grazioso e morbido",
+              "meter": "3/4 拍",
+              "form": "Exotic Character Piece",
+              "affekt": "湿热氤氲、异香扑鼻的热带幻境",
+              "highlights": "【调性轴线3起点：降A大调】戈多夫斯基游历印尼爪哇岛后创作的超高难度炫技套曲。精妙摹写热带甘美兰（Gamelan）打击乐器的微音程金属泛音，复调声部多达四层，在极轻的触键下呈现异域雨林的湿热奇香。",
+              "audioUrl": "release:v1.0-audio/12.Godowsky.The.Gardens.of.Buitenzorg.from.Java.Suite.No.8.mp3",
+              "duration": "约 3.5 分钟"
+            }
+          ]
         },
         {
           "id": "bacewicz-sonata2-largo",
@@ -222,10 +309,23 @@
           "key": "F小调 (F minor) → 轴线3关系小调回响",
           "year": "1953 年",
           "instrumentation": "钢琴独奏 (Solo Piano)",
-          "cheatSheet": ["二十世纪波兰最伟大女性作曲家的孤傲绝唱：厚重如玄武岩的低音圣咏，战后东欧的冰冷与坚韧。"],
+          "cheatSheet": [
+            "二十世纪波兰最伟大女性作曲家的孤傲绝唱：厚重如玄武岩的低音圣咏，战后东欧的冰冷与坚韧。"
+          ],
           "background": "巴切维奇是波兰现代乐派先驱、齐默尔曼毕生推崇的同胞大师。此曲写于冷战铁幕高压下，蕴含强烈的现代新古典主义悲壮感。F小调正是降A大调的关系小调。",
           "aesthetic": "冷峻花岗岩般的雕塑感、深沉的悲怆挽歌与民族宿命感。",
-          "movements": [{ "num": "", "tempo": "Largo (广板)", "meter": "自由节拍", "form": "Arch Form (对称拱形曲式)", "affekt": "苍凉沉痛、严酷如寒冬废墟", "highlights": "低音区压抑沉重的平行四度与五度和弦缓缓推进，高潮处爆发出钟鸣般的强音集群，随后归于死寂。", "audioUrl": "release:v1.0-audio/13.Bacewicz.Largo.in.F.minor.from.Piano.Sonata.No.2.mp3" }]
+          "movements": [
+            {
+              "num": "",
+              "tempo": "Largo (广板)",
+              "meter": "自由节拍",
+              "form": "Arch Form (对称拱形曲式)",
+              "affekt": "苍凉沉痛、严酷如寒冬废墟",
+              "highlights": "【调性轴线3回响：关系小调 F小调】波兰现代乐派先驱巴切维奇写于冷战高压时期的孤傲绝唱。厚重如玄武岩的低音圣咏与冷峻的花岗岩雕塑感层叠推进，高潮爆发出钟鸣般的强音集群，随后在严寒中归于死寂。",
+              "audioUrl": "release:v1.0-audio/13.Bacewicz.Largo.in.F.minor.from.Piano.Sonata.No.2.mp3",
+              "duration": "约 4.5 分钟"
+            }
+          ]
         },
         {
           "id": "debussy-minstrels",
@@ -238,10 +338,23 @@
           "key": "G大调 (G major) → 轴线4大调起点",
           "year": "1909 - 1910 年",
           "instrumentation": "钢琴独奏 (Solo Piano)",
-          "cheatSheet": ["幽默讽刺的杂耍舞台：模仿美式黑脸吟游杂耍班（Minstrel Show）的班卓琴拨弦、踢踏舞步与滑稽怪脸！"],
+          "cheatSheet": [
+            "幽默讽刺的杂耍舞台：模仿美式黑脸吟游杂耍班（Minstrel Show）的班卓琴拨弦、踢踏舞步与滑稽怪脸！"
+          ],
           "background": "德彪西在巴黎世博会接触到美国早期杂耍秀与切分乐后创作的先锋小品，前奏曲第一集的终曲。",
           "aesthetic": "早期爵士（Cakewalk）切分节奏与高卢式嘲讽幽默的奇妙碰撞。",
-          "movements": [{ "num": "", "tempo": "Modéré (中板，神经质的幽默)", "meter": "2/4 拍", "form": "Burlesque Vignette", "affekt": "滑稽戏谑、鬼马精灵的街头狂欢", "highlights": "断奏跳音模拟班卓琴拨弦，突如其来的强弱骤变与半音滑音如同小丑在舞台上的滑跌与嬉皮笑脸。", "audioUrl": "release:v1.0-audio/14.Debussy.Minstrels.from.Preludes.Book.I.L.117.No.12.mp3" }]
+          "movements": [
+            {
+              "num": "",
+              "tempo": "Modéré (中板，神经质的幽默)",
+              "meter": "2/4 拍",
+              "form": "Burlesque Vignette",
+              "affekt": "滑稽戏谑、鬼马精灵的街头狂欢",
+              "highlights": "【调性轴线4起点：G大调】德彪西在巴黎世博会接触美式黑脸杂耍班后创作的鬼马先锋小品。断奏跳音模拟班卓琴拨弦与踢踏舞步，突如其来的强弱骤变与半音滑音展现早期爵士乐（Cakewalk）的高卢式嘲弄幽默。",
+              "audioUrl": "release:v1.0-audio/14.Debussy.Minstrels.from.Preludes.Book.I.L.117.No.12.mp3",
+              "duration": "约 2.5 分钟"
+            }
+          ]
         },
         {
           "id": "ravel-tombeau-forlane",
@@ -254,10 +367,23 @@
           "key": "E小调 (E minor) → 轴线4关系小调幽影",
           "year": "1914 - 1917 年",
           "instrumentation": "钢琴独奏 (Solo Piano)",
-          "cheatSheet": ["一战战友的优雅悼亡碑：威尼斯古代弗兰舞曲附点节奏，拉威尔特有的酸涩不协和九和弦如泪珠滚动。"],
+          "cheatSheet": [
+            "一战战友的优雅悼亡碑：威尼斯古代弗兰舞曲附点节奏，拉威尔特有的酸涩不协和九和弦如泪珠滚动。"
+          ],
           "background": "拉威尔为在一战中阵亡的战友们写就的追思组曲。本乐章题献给陆军中尉加布里埃尔·德吕克（Gabriel Deluc）。E小调正是 G大调的关系小调。",
           "aesthetic": "高卢理性克制的悲伤，洛可可古风典雅外壳下包裹的战争创伤。",
-          "movements": [{ "num": "", "tempo": "Allegretto (小快板)", "meter": "6/8 拍", "form": "French Rondo (古代回旋舞曲)", "affekt": "苦涩微甘、优雅如钟表齿轮的忧伤", "highlights": "6/8拍顽固摇曳的附点节奏贯穿全曲，中段和声大胆使用增四度和减五度滑音，展现超凡绝伦的配器透明度。", "audioUrl": "release:v1.0-audio/15.Ravel.Forlane.from.Le.Tombeau.de.Couperin.M.68.No.3.mp3" }]
+          "movements": [
+            {
+              "num": "",
+              "tempo": "Allegretto (小快板)",
+              "meter": "6/8 拍",
+              "form": "French Rondo (古代回旋舞曲)",
+              "affekt": "苦涩微甘、优雅如钟表齿轮的忧伤",
+              "highlights": "【调性轴线4幽影：关系小调 E小调】拉威尔为一战阵亡战友谱写的洛可可古代舞曲。6/8 拍顽固摇曳的附点节奏贯穿全曲，酸涩的不协和九和弦如泪珠滚动，将克制理性的悲伤包裹在精密的钟表齿轮机械美学中。",
+              "audioUrl": "release:v1.0-audio/15.Ravel.Forlane.from.Le.Tombeau.de.Couperin.M.68.No.3.mp3",
+              "duration": "约 5 分钟"
+            }
+          ]
         },
         {
           "id": "rachmaninoff-op23-4",
@@ -270,10 +396,23 @@
           "key": "D大调 (D major) → 轴线5大调起点",
           "year": "1903 年",
           "instrumentation": "钢琴独奏 (Solo Piano)",
-          "cheatSheet": ["最宽广纯洁的俄罗斯夜曲：左手如大提琴般的连绵长歌，右手中高音区如水草在清波中摇曳。"],
+          "cheatSheet": [
+            "最宽广纯洁的俄罗斯夜曲：左手如大提琴般的连绵长歌，右手中高音区如水草在清波中摇曳。"
+          ],
           "background": "写于拉赫玛尼诺夫与表妹娜塔莉亚新婚后的幸福岁月。此时他彻底摆脱了第一交响曲首演惨败的精神危机，旋律灵感喷涌而出。",
           "aesthetic": "俄罗斯辽阔草原的深情怀想与纯真精神抚慰。",
-          "movements": [{ "num": "", "tempo": "Andante cantabile (如歌的行板)", "meter": "3/4 拍", "form": "Continuous Melodic Weaving", "affekt": "温厚深情、夕阳西下的无边宁静", "highlights": "拉赫标志性的宽广中音区歌唱性线条，伴奏织体由单层琶音逐渐延展为壮阔的钟鸣和声浪潮。", "audioUrl": "release:v1.0-audio/16.Rachmaninoff.Prelude.in.D.major.Op.23.No.4.mp3" }]
+          "movements": [
+            {
+              "num": "",
+              "tempo": "Andante cantabile (如歌的行板)",
+              "meter": "3/4 拍",
+              "form": "Continuous Melodic Weaving",
+              "affekt": "温厚深情、夕阳西下的无边宁静",
+              "highlights": "【调性轴线5起点：D大调】拉赫玛尼诺夫告别抑郁阴霾、新婚幸福时期的宽广长歌。左手如大提琴般温厚歌唱，右手中高音区如水草在清波中摇曳，伴奏织体由单层琶音逐渐延展为壮阔的俄罗斯钟鸣浪潮。",
+              "audioUrl": "release:v1.0-audio/16.Rachmaninoff.Prelude.in.D.major.Op.23.No.4.mp3",
+              "duration": "约 4 分钟"
+            }
+          ]
         },
         {
           "id": "franck-op18-prelude",
@@ -286,10 +425,23 @@
           "key": "B小调 (B minor) → 轴线5关系小调虔敬",
           "year": "1862 年（管风琴原版）/ 1910 年代（钢琴版）",
           "instrumentation": "钢琴独奏 (Solo Piano)",
-          "cheatSheet": ["管风琴大师的圣咏冥想：管风琴脚键盘低音化作钢琴左手沉静的拨弦，右手如双簧管般吹响孤独圣咏。"],
+          "cheatSheet": [
+            "管风琴大师的圣咏冥想：管风琴脚键盘低音化作钢琴左手沉静的拨弦，右手如双簧管般吹响孤独圣咏。"
+          ],
           "background": "弗兰克原为巴黎圣克洛蒂尔德大教堂管风琴所作六首巨作之一，后由英裔美国钢琴家哈罗德·鲍尔改编为钢琴独奏版。B小调是 D大调的关系小调。",
           "aesthetic": "法国晚期浪漫主义神圣宗教感与巴赫管风琴传统的完美合流。",
-          "movements": [{ "num": "", "tempo": "Andantino cantabile (如歌的小行板)", "meter": "9/8 拍", "form": "Pastoral Chaconne-like Prelude", "affekt": "虔诚肃穆、圣殿夕照下的超凡宁静", "highlights": "9/8拍的田园律动中，小提琴与木管音色的钢琴化转译极为纯粹，低音如教堂钟声般沉稳驻留。", "audioUrl": "release:v1.0-audio/17.Franck.Prelude.in.B.minor.from.Prelude.Fugue.et.Variation.Op.18.arr.Bauer.mp3" }]
+          "movements": [
+            {
+              "num": "",
+              "tempo": "Andantino cantabile (如歌的小行板)",
+              "meter": "9/8 拍",
+              "form": "Pastoral Chaconne-like Prelude",
+              "affekt": "虔诚肃穆、圣殿夕照下的超凡宁静",
+              "highlights": "【调性轴线5虔敬：关系小调 B小调】管风琴大师弗兰克六大名作之一（哈罗德·鲍尔钢琴改编版）。9/8 拍田园律动中，教堂管风琴脚键盘低音化作钢琴左手沉静的拨弦，右手如双簧管般吹响孤独而神圣的圣咏。",
+              "audioUrl": "release:v1.0-audio/17.Franck.Prelude.in.B.minor.from.Prelude.Fugue.et.Variation.Op.18.arr.Bauer.mp3",
+              "duration": "约 3.5 分钟"
+            }
+          ]
         },
         {
           "id": "schubert-d899-3",
@@ -302,10 +454,23 @@
           "key": "降G大调 (G-flat major) → 轴线6大调起点",
           "year": "1827 年",
           "instrumentation": "钢琴独奏 (Solo Piano)",
-          "cheatSheet": ["六个降记号的纯净天籁：中声部连绵起伏的三连音如静水流深，上方升起如天使般的无词歌。"],
+          "cheatSheet": [
+            "六个降记号的纯净天籁：中声部连绵起伏的三连音如静水流深，上方升起如天使般的无词歌。"
+          ],
           "background": "写于舒伯特去世前一年的夏天。出版商哈斯林格曾因六个降号太难读谱擅自将其移调至 G大调，后世原典版（Urtext）彻底恢复了降G大调那独一无二的丝绒般天鹅绒音色。",
           "aesthetic": "流浪者终极的心灵庇护所，在苦难人间对天国安宁的深情远眺。",
-          "movements": [{ "num": "", "tempo": "Andante (行板)", "meter": "4/2 拍 (Alla breve)", "form": "Song without Words (无词歌三段体)", "affekt": "澄澈安详、含泪微笑的终极抚慰", "highlights": "4/2拍超长小节线带来宽阔的呼吸感，中段低音区泛起阴云密布的颤音，随后再度升华为无垢的纯净光晕。", "audioUrl": "release:v1.0-audio/18.Schubert.Impromptu.in.G-flat.major.D.899.No.3.mp3" }]
+          "movements": [
+            {
+              "num": "",
+              "tempo": "Andante (行板)",
+              "meter": "4/2 拍 (Alla breve)",
+              "form": "Song without Words (无词歌三段体)",
+              "affekt": "澄澈安详、含泪微笑的终极抚慰",
+              "highlights": "【调性轴线6起点：降G大调】舒伯特临终前一年的天籁绝响。六个降记号带来天鹅绒般细腻纯净的音色，4/2 拍长小节线带来宽阔如静水流深的呼吸感，中段低音区泛起阴云密布的颤音，随后再度升华为无垢的心灵庇护所。",
+              "audioUrl": "release:v1.0-audio/18.Schubert.Impromptu.in.G-flat.major.D.899.No.3.mp3",
+              "duration": "约 5.5-6 分钟"
+            }
+          ]
         },
         {
           "id": "gershwin-prelude-3",
@@ -318,10 +483,23 @@
           "key": "降E小调 (E-flat minor) → 轴线6关系小调切分狂欢",
           "year": "1926 年",
           "instrumentation": "钢琴独奏 (Solo Piano)",
-          "cheatSheet": ["古典天籁瞬间切入百老汇街头：蓝调音阶（Blue notes）与泼辣西班牙哈巴涅拉舞曲的疯狂交织！"],
+          "cheatSheet": [
+            "古典天籁瞬间切入百老汇街头：蓝调音阶（Blue notes）与泼辣西班牙哈巴涅拉舞曲的疯狂交织！"
+          ],
           "background": "格什温《三首前奏曲》中的压轴之作。降E小调正是前一首舒伯特《即兴曲》（降G大调）严格的关系小调，齐默尔曼在此构建出绝妙的美学反差。",
           "aesthetic": "纽约曼哈顿现代都市活力、爵士摇摆切分与古典结构的小型狂想。",
-          "movements": [{ "num": "", "tempo": "Agitato (激动的)", "meter": "2/4 拍", "form": "Syncopated Miniature", "affekt": "辛辣泼辣、摇摆摩登的都市脉搏", "highlights": "双手交错的重音错位与蓝调降三音、降七音，以极高的能量密度如子弹般射向终点。", "audioUrl": "release:v1.0-audio/19.Gershwin.Prelude.No.3.in.E-flat.minor.mp3" }]
+          "movements": [
+            {
+              "num": "",
+              "tempo": "Agitato (激动的)",
+              "meter": "2/4 拍",
+              "form": "Syncopated Miniature",
+              "affekt": "辛辣泼辣、摇摆摩登的都市脉搏",
+              "highlights": "【调性轴线6狂欢：关系小调 降E小调】格什温纯正曼哈顿都市现代前奏曲。古典天籁瞬间切入百老汇街头，蓝调降三音、降七音与泼辣的西班牙哈巴涅拉舞曲激烈交织，双手重音错位以极高能量密度射向终点。",
+              "audioUrl": "release:v1.0-audio/19.Gershwin.Prelude.No.3.in.E-flat.minor.mp3",
+              "duration": "约 1.5 分钟"
+            }
+          ]
         },
         {
           "id": "szymanowski-op10-var7",
@@ -334,10 +512,23 @@
           "key": "B大调 (B major) → 轴线7大调起点",
           "year": "1900 - 1904 年",
           "instrumentation": "钢琴独奏 (Solo Piano)",
-          "cheatSheet": ["整场最冷僻的孤本遗珠！扎科帕内高地民歌在席曼诺夫斯基笔下被点化为晶莹闪烁的波兰夜曲。"],
+          "cheatSheet": [
+            "整场最冷僻的孤本遗珠！扎科帕内高地民歌在席曼诺夫斯基笔下被点化为晶莹闪烁的波兰夜曲。"
+          ],
           "background": "齐默尔曼毕生不遗余力推广的波兰现代音乐之父席曼诺夫斯基早期名作。以塔特拉山区高地人民歌（Góral）为主题构建的十首宏大变奏之一，第七变奏为其中最空灵典雅的一折。",
           "aesthetic": "波兰高地民歌泥土芳香与肖邦式高雅沙龙精神的升华变奏。",
-          "movements": [{ "num": "", "tempo": "Tempo di Valse. Dolce e con grazia", "meter": "3/4 拍", "form": "Character Variation (圆舞曲风变奏)", "affekt": "柔美优雅、微风拂过高山草甸", "highlights": "极其精致的装饰音与轻灵圆舞曲律动，展现出齐默尔曼无与伦比的弱音（pianissimo）触键调色能力。", "audioUrl": "release:v1.0-audio/20.Szymanowski.Variation.VII.in.B.major.from.Variations.on.a.Polish.Folk.Theme.Op.10.mp3" }]
+          "movements": [
+            {
+              "num": "",
+              "tempo": "Tempo di Valse. Dolce e con grazia",
+              "meter": "3/4 拍",
+              "form": "Character Variation (圆舞曲风变奏)",
+              "affekt": "柔美优雅、微风拂过高山草甸",
+              "highlights": "【调性轴线7起点：B大调】整场独奏会最冷僻的孤本遗珠！扎科帕内高地民歌在席曼诺夫斯基笔下被点化为晶莹闪烁的波兰夜曲，极其精致的圆舞曲律动展现出齐默尔曼无与伦比的极弱音（pp）触键调色能力。",
+              "audioUrl": "release:v1.0-audio/20.Szymanowski.Variation.VII.in.B.major.from.Variations.on.a.Polish.Folk.Theme.Op.10.mp3",
+              "duration": "约 1.5 分钟"
+            }
+          ]
         },
         {
           "id": "rachmaninoff-op32-12",
@@ -350,10 +541,23 @@
           "key": "升G小调 (G-sharp minor) → 轴线7关系小调冰原",
           "year": "1910 年（伊万诺夫卡庄园）",
           "instrumentation": "钢琴独奏 (Solo Piano)",
-          "cheatSheet": ["俄罗斯雪橇银铃在极夜中飞驰：右手如冰晶碎裂的持续三连音碎弓，左手唱出苍茫古老的俄罗斯长歌。"],
+          "cheatSheet": [
+            "俄罗斯雪橇银铃在极夜中飞驰：右手如冰晶碎裂的持续三连音碎弓，左手唱出苍茫古老的俄罗斯长歌。"
+          ],
           "background": "拉赫玛尼诺夫在伊万诺夫卡庄园宁静秋日中一气呵成完成的十三首前奏曲之一。升G小调是 B大调的关系小调。",
           "aesthetic": "孤寂辽阔的俄罗斯冬日风景画，银装素裹下的深情凝望。",
-          "movements": [{ "num": "", "tempo": "Allegro (快板)", "meter": "12/8 拍", "form": "Figured Melodic Tapestry", "affekt": "冷冽空灵、马车银铃般的冬日飞驰", "highlights": "右手极高难度的连续颤音音型如雪花飘落，左手大拇指从中音区突显出动人心弦的深沉咏叹。", "audioUrl": "release:v1.0-audio/21.Rachmaninoff.Prelude.in.G-sharp.minor.Op.32.No.12.mp3" }]
+          "movements": [
+            {
+              "num": "",
+              "tempo": "Allegro (快板)",
+              "meter": "12/8 拍",
+              "form": "Figured Melodic Tapestry",
+              "affekt": "冷冽空灵、马车银铃般的冬日飞驰",
+              "highlights": "【调性轴线7冰原：关系小调 升G小调】拉赫玛尼诺夫在伊万诺夫卡庄园宁静秋日中写就的北国飞雪。右手极高难度的连续颤音音型如马车银铃在冰原飞驰，左手大拇指从中音区突显出动人心弦的深沉咏叹。",
+              "audioUrl": "release:v1.0-audio/21.Rachmaninoff.Prelude.in.G-sharp.minor.Op.32.No.12.mp3",
+              "duration": "约 2.5 分钟"
+            }
+          ]
         },
         {
           "id": "kapustin-op53-9",
@@ -366,10 +570,23 @@
           "key": "E大调 (E major) → 轴线8终极主调起点",
           "year": "1988 年",
           "instrumentation": "钢琴独奏 (Solo Piano)",
-          "cheatSheet": ["古典赋格与大乐队爵士的化学奇迹：严密的巴赫式对位骨架，包裹着让人忍不住打响指的摇摆律动！"],
+          "cheatSheet": [
+            "古典赋格与大乐队爵士的化学奇迹：严密的巴赫式对位骨架，包裹着让人忍不住打响指的摇摆律动！"
+          ],
           "background": "苏俄作曲家卡普斯汀将纯正美国爵士乐汇（Bebop/Stride）完全用严谨古典曲式记谱的代表作《24首爵士前奏曲》之一。",
           "aesthetic": "高度智性严谨的古典对位结构与自由即兴爵士灵韵的超凡合体。",
-          "movements": [{ "num": "", "tempo": "Andantino (小行板)", "meter": "4/4 拍 (Swing Feel)", "form": "Jazz Contrapuntal Prelude", "affekt": "慵懒洒脱、行云流水的都市爵士夜", "highlights": "密集的切分音与行进低音（Walking Bass）在古典手指触键下颗粒分明，充满令人愉悦的现代律动。", "audioUrl": "release:v1.0-audio/22.Kapustin.Prelude.in.E.major.Op.53.No.9.mp3" }]
+          "movements": [
+            {
+              "num": "",
+              "tempo": "Andantino (小行板)",
+              "meter": "4/4 拍 (Swing Feel)",
+              "form": "Jazz Contrapuntal Prelude",
+              "affekt": "慵懒洒脱、行云流水的都市爵士夜",
+              "highlights": "【调性轴线8主调：E大调】卡普斯汀将纯正美式比博普爵士完全用严谨古典对位记谱的代表作。密集的切分音与行进低音（Walking Bass）在古典手指颗粒下灵动弹跳，古典骨架与摇摆灵韵在此完美合体。",
+              "audioUrl": "release:v1.0-audio/22.Kapustin.Prelude.in.E.major.Op.53.No.9.mp3",
+              "duration": "约 2 分钟"
+            }
+          ]
         },
         {
           "id": "rachmaninoff-op3-2",
@@ -382,10 +599,23 @@
           "key": "升C小调 (C-sharp minor) → 轴线8终极关系小调压轴",
           "year": "1892 年（莫斯科，19岁）",
           "instrumentation": "钢琴独奏 (Solo Piano)",
-          "cheatSheet": ["调性之旅的终极震撼风暴：克里姆林宫沉重地动山摇的下行三音钟声（A-G#-C#），全人类最著名的和弦轰鸣！"],
+          "cheatSheet": [
+            "调性之旅的终极震撼风暴：克里姆林宫沉重地动山摇的下行三音钟声（A-G#-C#），全人类最著名的和弦轰鸣！"
+          ],
           "background": "拉赫玛尼诺夫从莫斯科音乐学院毕业不久写就的名扬全球之作。升C小调正是 E大调的关系小调，至此完成了八组大调向关系小调转换的完美闭环。",
           "aesthetic": "俄罗斯末日审判般的钟鸣巨浪，深沉厚重的斯拉夫民族悲怆。",
-          "movements": [{ "num": "", "tempo": "Lento - Agitato - Largo", "meter": "4/4 拍", "form": "Monumental Ternary (宏伟三段体)", "affekt": "地动山摇、宿命钟鸣的末日交响", "highlights": "开篇 ff 的下行三音动机如巨钟撼地；中段 Agitato 三连音狂风卷席；再现部四行谱表全键盘齐鸣，齐默尔曼以无与伦比的重量将全场气氛推向最高潮。", "audioUrl": "release:v1.0-audio/23.Rachmaninoff.Prelude.in.C-sharp.minor.Op.3.No.2.mp3" }]
+          "movements": [
+            {
+              "num": "",
+              "tempo": "Lento - Agitato - Largo",
+              "meter": "4/4 拍",
+              "form": "Monumental Ternary (宏伟三段体)",
+              "affekt": "地动山摇、宿命钟鸣的末日交响",
+              "highlights": "【调性轴线8终极压轴：关系小调 升C小调】全人类最著名的和弦轰鸣！开篇 ff 下行三音动机（A-G#-C#）如克里姆林宫巨钟撼地，再现部四行谱表全键盘齐鸣，以排山倒海的俄罗斯悲怆力量完成 8 组调性色彩微雕的终极闭环。",
+              "audioUrl": "release:v1.0-audio/23.Rachmaninoff.Prelude.in.C-sharp.minor.Op.3.No.2.mp3",
+              "duration": "约 4.5 分钟"
+            }
+          ]
         },
         {
           "id": "schubert-d899-2",
@@ -398,10 +628,23 @@
           "key": "降E大调 (E-flat major) → 升华返场",
           "year": "1827 年",
           "instrumentation": "钢琴独奏 (Solo Piano)",
-          "cheatSheet": ["齐默尔曼压轴返场奇迹：右手如银河倾泻、毫无重力感的无瑕三连音流，中段转入 B小调狂暴的波西米亚吉普赛舞曲！"],
+          "cheatSheet": [
+            "齐默尔曼压轴返场奇迹：右手如银河倾泻、毫无重力感的无瑕三连音流，中段转入 B小调狂暴的波西米亚吉普赛舞曲！"
+          ],
           "background": "写于舒伯特生命的最后岁月，常作为独奏会最高潮的试金石。轻盈如羽毛的连音（Legato）与中段粗犷狂放的民族舞曲构成剧烈反差。",
           "aesthetic": "天鹅绒般光滑的纯净流动与中欧民间热血沸腾狂舞的奇迹统一。",
-          "movements": [{ "num": "Encore", "tempo": "Allegro (快板)", "meter": "3/4 拍", "form": "Ternary Scherzando (三段体谐谑即兴曲)", "affekt": "行云流水、落霞与孤鹜齐飞的超凡欢愉", "highlights": "极度考验触键均匀度的高速下行音阶如珍珠滚落，中段切入强烈重音与厚重和弦，终曲在急速旋风中傲然收笔。", "audioUrl": "release:v1.0-audio/24.Schubert.Impromptu.in.E-flat.major.D.899.No.2.mp3" }]
+          "movements": [
+            {
+              "num": "Encore",
+              "tempo": "Allegro (快板)",
+              "meter": "3/4 拍",
+              "form": "Ternary Scherzando (三段体谐谑即兴曲)",
+              "affekt": "行云流水、落霞与孤鹜齐飞的超凡欢愉",
+              "highlights": "【压轴返场：降E大调】舒伯特生命最后岁月的即兴奇迹。右手如银河倾泻、毫无重力感的无瑕三连音阶如珍珠滚落，中段切入 B小调粗犷狂暴的吉普赛民族热舞，终曲在急速旋风中傲然收笔。",
+              "audioUrl": "release:v1.0-audio/24.Schubert.Impromptu.in.E-flat.major.D.899.No.2.mp3",
+              "duration": "约 4.5 分钟"
+            }
+          ]
         }
       ]
     }

@@ -22,3 +22,15 @@ details > summary::-webkit-details-marker {
 .dark .card-shadow {
   box-shadow: 0 10px 28px -4px rgba(0, 0, 0, 0.55);
 }
+
+/* 字号多档调节支持 (标准 100% / 放大 112.5% / 特大 125%) */
+html[data-font-size="standard"] {
+  font-size: 16px;
+}
+html[data-font-size="medium"] {
+  font-size: 18px;
+}
+html[data-font-size="large"] {
+  font-size: 20px;
+}
+
