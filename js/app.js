@@ -443,12 +443,7 @@ function renderSessionContent() {
                           <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M4.5 3.5v13l11-6.5-11-6.5z"/></svg>
                           <span>录音</span>
                         </button>
-                      ` : `
-                        <button type="button" onclick="showAudioToast(event)" class="px-2 py-0.5 rounded-full bg-parchment-200 dark:bg-obsidian-800 text-parchment-400 dark:text-zinc-500 font-sans text-[10px] flex items-center gap-1 opacity-70 hover:opacity-100">
-                          <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 100-6 3 3 0 000 6z"/></svg>
-                          <span>待归档</span>
-                        </button>
-                      `}
+                      ` : ''}
                       <span class="text-parchment-400 dark:text-zinc-500 group-open:rotate-180 transition-transform text-xs font-mono">▾</span>
                     </div>
                   </summary>
@@ -490,7 +485,7 @@ function resolveAudioUrl(url) {
   if (url.startsWith('release:')) {
     const raw = url.slice(8);
     const slashIdx = raw.indexOf('/');
-    const tag = slashIdx !== -1 ? raw.slice(0, slashIdx) : 'v1.0-audio';
+    const tag = slashIdx !== -1 ? raw.slice(0, slashIdx) : 'audio-20261105-zimerman';
     const file = slashIdx !== -1 ? raw.slice(slashIdx + 1) : raw;
     return ['https:', '', 'github.com', 'GiovanniGuoJY', 'concert-archive', 'releases', 'download', tag, encodeURIComponent(file)].join('/');
   }

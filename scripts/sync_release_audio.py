@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-一键将 GitHub Release (v1.0-audio) 中的 24 首齐默尔曼独奏会 MP3 音频
+一键将 GitHub Release (audio-20261105-zimerman) 中的 24 首齐默尔曼独奏会 MP3 音频
 同步下载到本地仓库的 audio/ 目录，以便通过 GitHub Pages 提供原生流式播放支持。
 """
 import os
@@ -9,7 +9,7 @@ import urllib.parse
 
 REPO_OWNER = 'GiovanniGuoJY'
 REPO_NAME = 'concert-archive'
-TAG = 'v1.0-audio'
+TAG = 'audio-20261105-zimerman'
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 AUDIO_DIR = os.path.join(BASE_DIR, 'audio')
