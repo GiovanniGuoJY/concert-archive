@@ -492,7 +492,7 @@ function resolveAudioUrl(url) {
     const slashIdx = raw.indexOf('/');
     const tag = slashIdx !== -1 ? raw.slice(0, slashIdx) : 'v1.0-audio';
     const file = slashIdx !== -1 ? raw.slice(slashIdx + 1) : raw;
-    return ['https:', '', 'github.com', 'GiovanniGuoJY', 'concert-archive', 'releases', 'download', tag, file].join('/');
+    return ['https:', '', 'github.com', 'GiovanniGuoJY', 'concert-archive', 'releases', 'download', tag, encodeURIComponent(file)].join('/');
   }
   return url;
 }
@@ -514,10 +514,24 @@ function playMovementAudio(event, trackJsonEncoded) {
   dom.audioTrackTitle.textContent = track.title;
   dom.audioTrackSubtitle.textContent = track.subtitle;
   
+  const directLink = document.getElementById('audioDirectLink');
+  if (directLink) {
+    directLink.href = resolvedUrl;
+  }
+
   if (dom.audioElement.src !== resolvedUrl) {
     dom.audioElement.src = resolvedUrl;
+    dom.audioElement.load();
   }
-  dom.audioElement.play().catch(e => console.warn('音频播放受限:', e));
+  
+  const playPromise = dom.audioElement.play();
+  if (playPromise !== undefined) {
+    playPromise.catch(e => {
+      console.warn('音频播放受限:', e);
+      dom.audioTrackSubtitle.innerHTML = `${track.subtitle} · <a href="${resolvedUrl}" target="_blank" class="text-accentGold-700 dark:text-accentGold-400 underline font-semibold ml-1">新窗口播放 ↗</a>`;
+      updatePlayPauseIcon(false);
+    });
+  }
   state.currentAudio = { ...track, resolvedUrl };
   updatePlayPauseIcon(true);
 }
@@ -574,6 +588,14 @@ function setupAudioPlayerEvents() {
   };
 
   audio.onended = () => {
+    updatePlayPauseIcon(false);
+  };
+
+  audio.onerror = (e) => {
+    console.warn('音频加载受限:', audio.error);
+    const directLink = document.getElementById('audioDirectLink');
+    const targetUrl = (directLink && directLink.href) || dom.audioElement.src;
+    dom.audioTrackSubtitle.innerHTML = `<span class="text-amber-500 font-sans text-[11px]">⚠️ 移动端在线试听受限，<a href="${targetUrl}" target="_blank" class="underline text-accentGold-600 dark:text-accentGold-400 font-bold ml-1">点此新窗口直接播放/下载 ↗</a></span>`;
     updatePlayPauseIcon(false);
   };
 }

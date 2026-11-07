@@ -71,10 +71,10 @@
     <div id="worksContainer" class="space-y-7"></div>
   </main>
 
-  <aside id="globalAudioBar" class="fixed bottom-12 left-3 right-3 sm:left-auto sm:right-6 sm:w-96 bg-parchment-100/95 dark:bg-obsidian-900/95 backdrop-blur-md border border-accentGold-500/40 rounded-2xl p-3 shadow-2xl z-50 hidden transition-all">
-    <audio id="mainAudioElement" class="hidden"></audio>
-    <div class="flex items-center justify-between mb-2">
-      <div class="min-w-0 pr-2">
+  <aside id="globalAudioBar" class="fixed bottom-12 left-3 right-3 sm:left-auto sm:right-6 sm:w-96 bg-parchment-100/95 dark:bg-obsidian-900/95 backdrop-blur-md border border-accentGold-500/40 rounded-2xl p-3.5 shadow-2xl z-50 hidden transition-all">
+    <audio id="mainAudioElement" preload="metadata" playsinline class="sr-only"></audio>
+    <div class="flex items-center justify-between gap-2 mb-2">
+      <div class="min-w-0 pr-2 flex-1">
         <div class="flex items-center gap-1.5">
           <span class="w-2 h-2 rounded-full bg-accentGold-500 animate-pulse"></span>
           <span class="text-[10px] font-mono uppercase font-bold text-accentGold-700 dark:text-accentGold-400">现场录音回放</span>
@@ -82,7 +82,13 @@
         <h4 id="audioTrackTitle" class="text-xs font-serif font-bold text-parchment-900 dark:text-zinc-100 truncate">曲目名称</h4>
         <p id="audioTrackSubtitle" class="text-[11px] text-parchment-600 dark:text-zinc-400 truncate">乐章标记</p>
       </div>
-      <button onclick="closeAudioBar()" title="收起播放器" class="text-parchment-400 dark:text-zinc-500 hover:text-parchment-800 dark:hover:text-zinc-200 p-1 text-sm">✕</button>
+      <div class="flex items-center gap-2 shrink-0">
+        <a id="audioDirectLink" href="#" target="_blank" title="若移动端在线播放受限，点击直接在浏览器新窗口打开或下载" class="text-[11px] font-sans text-accentGold-700 dark:text-accentGold-400 hover:underline flex items-center gap-1 bg-accentGold-500/15 px-2 py-1 rounded-lg transition-all active:scale-95">
+          <span>新窗口打开</span>
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+        </a>
+        <button onclick="closeAudioBar()" title="收起播放器" class="text-parchment-400 dark:text-zinc-500 hover:text-parchment-800 dark:hover:text-zinc-200 p-1 text-sm">✕</button>
+      </div>
     </div>
 
     <div class="space-y-1">
