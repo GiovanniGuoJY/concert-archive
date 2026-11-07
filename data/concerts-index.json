@@ -93,5 +93,56 @@
       "舒伯特即兴曲返场"
     ],
     "shortDesc": "当今世界乐坛传奇钢琴巨匠齐默尔曼中国巡演深圳站。前半程贝多芬早期向成熟期跃升两座丰碑，后半程严谨呈现八组调性色彩轴线微雕。"
+  },
+  {
+    "id": "cs-argerich-vengerov-2026",
+    "selectorLabel": "2026.11.01 · 长沙音乐厅 · 阿格里奇 / 文格洛夫 领衔室内乐",
+    "file": "data/concerts/2026-11-01-cs-argerich-vengerov.json",
+    "date": "2026年11月1日 19:30",
+    "dateIso": "2026-11-01",
+    "venue": "长沙音乐厅 · 湘江大厅",
+    "city": "中国 · 长沙",
+    "title": "阿格里奇与文格洛夫领衔室内乐音乐会研习档案",
+    "subTitle": "Martha Argerich & Maxim Vengerov Chamber Music Concert Study Guide",
+    "featuredArtist": "玛塔·阿格里奇 / 马克西姆·文格洛夫 / 莫罗 / 丽达·陈 / 恩托库 / 巴尔-萨伊",
+    "status": "past",
+    "worksCount": 9,
+    "hasAudio": false,
+    "programTags": [
+      "舒曼 幻想曲 Op.73",
+      "马勒 A小调钢琴四重奏",
+      "皮亚佐拉 华丽的大探戈",
+      "莫扎特 E小调小提琴奏鸣曲 K.304",
+      "拉威尔《圆舞曲》双钢琴",
+      "舒伯特 A大调回旋曲 D.951",
+      "柴可夫斯基《回忆留恋的地方》Op.42",
+      "福雷《悲歌》Op.24",
+      "贝多芬 第九小提琴奏鸣曲“克莱采”"
+    ],
+    "shortDesc": "钢琴女祭司阿格里奇携手小提琴巨擘文格洛夫领衔室内乐之夜，涵盖舒曼、马勒、拉威尔双钢琴及贝多芬克莱采奏鸣曲（第一首与第六首依实况对调）。"
+  },
+  {
+    "id": "sz-chloe-chua-sso-2026",
+    "selectorLabel": "2026.10.23 · 深圳音乐厅 · 蔡珂宜 / 汉努林图 / 新加坡交响乐团",
+    "file": "data/concerts/2026-10-23-sz-chloe-chua-sso.json",
+    "date": "2026年10月23日 20:00",
+    "dateIso": "2026-10-23",
+    "venue": "深圳音乐厅 · 演奏大厅",
+    "city": "中国 · 深圳",
+    "title": "蔡珂宜与新加坡交响乐团音乐会研习档案",
+    "subTitle": "Chloe Chua & Singapore Symphony Orchestra / Hannu Lintu Study Guide",
+    "featuredArtist": "蔡珂宜 (小提琴) / 汉努·林图 (指挥) / 新加坡交响乐团",
+    "status": "past",
+    "worksCount": 6,
+    "hasAudio": false,
+    "programTags": [
+      "王辰威《姐妹岛》交响音诗",
+      "门德尔松 E小调小提琴协奏曲 Op.64",
+      "庞塞《小星星》(海菲茨版返场)",
+      "巴赫 BWV 1005 广板(返场)",
+      "马勒 第一交响曲“巨人”",
+      "西贝柳斯《节日行板》(返场)"
+    ],
+    "shortDesc": "新加坡交响乐团中国巡演深圳站。青年小提琴家蔡珂宜呈现门德尔松浪漫经典与双返场，林图执棒马勒第一交响曲“巨人”与西贝柳斯节日行板。"
   }
 ]
