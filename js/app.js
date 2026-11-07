@@ -477,8 +477,11 @@ function renderSessionContent() {
   }
 }
 
+// Cloudflare R2 全球 CDN 加速直链基准地址（原生支持 HTTP 206 Range 分段加载与移动端 Inline 试听）
+const R2_BASE_URL = 'https://pub-e1fd269f16e74a49b30607eca4df882a.r2.dev';
+
 /**
- * 解析音频播放链接（支持 GitHub Releases 动态解析）
+ * 解析音频播放链接（优先通过 Cloudflare R2 全球 CDN 原生流式直连，若未配置则回退到 GitHub Releases）
  */
 function resolveAudioUrl(url) {
   if (!url) return '';
@@ -487,6 +490,11 @@ function resolveAudioUrl(url) {
     const slashIdx = raw.indexOf('/');
     const tag = slashIdx !== -1 ? raw.slice(0, slashIdx) : 'audio-20261105-zimerman';
     const file = slashIdx !== -1 ? raw.slice(slashIdx + 1) : raw;
+    
+    // 优先通过 Cloudflare R2 进行无重定向、支持 iOS 分段预加载的原生播放
+    if (R2_BASE_URL) {
+      return `${R2_BASE_URL}/${tag}/${encodeURIComponent(file)}`;
+    }
     return ['https:', '', 'github.com', 'GiovanniGuoJY', 'concert-archive', 'releases', 'download', tag, encodeURIComponent(file)].join('/');
   }
   return url;
