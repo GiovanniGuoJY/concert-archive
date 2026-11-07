@@ -436,13 +436,29 @@ function renderSessionContent() {
 }
 
 /**
+ * 解析音频播放链接（支持 GitHub Releases 动态解析）
+ */
+function resolveAudioUrl(url) {
+  if (!url) return '';
+  if (url.startsWith('release:')) {
+    const raw = url.slice(8);
+    const slashIdx = raw.indexOf('/');
+    const tag = slashIdx !== -1 ? raw.slice(0, slashIdx) : 'v1.0-audio';
+    const file = slashIdx !== -1 ? raw.slice(slashIdx + 1) : raw;
+    return ['https:', '', 'github.com', 'GiovanniGuoJY', 'concert-archive', 'releases', 'download', tag, file].join('/');
+  }
+  return url;
+}
+
+/**
  * 播放特定乐章音频
  */
 function playMovementAudio(event, trackJsonEncoded) {
   event.stopPropagation();
   event.preventDefault();
   const track = JSON.parse(decodeURIComponent(trackJsonEncoded));
-  if (!track.audioUrl) {
+  const resolvedUrl = resolveAudioUrl(track.audioUrl);
+  if (!resolvedUrl) {
     showAudioToast(event);
     return;
   }
@@ -451,11 +467,11 @@ function playMovementAudio(event, trackJsonEncoded) {
   dom.audioTrackTitle.textContent = track.title;
   dom.audioTrackSubtitle.textContent = track.subtitle;
   
-  if (dom.audioElement.src !== track.audioUrl) {
-    dom.audioElement.src = track.audioUrl;
+  if (dom.audioElement.src !== resolvedUrl) {
+    dom.audioElement.src = resolvedUrl;
   }
   dom.audioElement.play().catch(e => console.warn('音频播放受限:', e));
-  state.currentAudio = track;
+  state.currentAudio = { ...track, resolvedUrl };
   updatePlayPauseIcon(true);
 }
 
