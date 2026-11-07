@@ -1,0 +1,24 @@
+/* 音乐会研习档案 - 自定义微调样式 */
+::selection {
+  background: #D4A346;
+  color: #0B0C0E;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+.card-shadow {
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
+}
+.dark .card-shadow {
+  box-shadow: 0 10px 28px -4px rgba(0, 0, 0, 0.55);
+}
