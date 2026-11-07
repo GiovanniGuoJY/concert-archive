@@ -8,7 +8,7 @@ const state = {
   concertIndex: [],       // 从 data/concerts-index.json 加载的索引列表
   activeConcertId: null,  // 当前激活的音乐会 ID
   concertCache: {},       // 缓存已拉取的单场音乐会数据 { id: data }
-  activeSessionIndex: 0,  // 当前场次索引 (如上午场/下午场)
+  activeSessionIndex: 0,  // 当前场次索引 (如上半场/下半场，第一场/第二场)
   isCheatSheetMode: false,// 是否处于 30 秒速查模式
   currentAudio: null,     // 当前播放中的音频对象信息
 };
@@ -56,10 +56,17 @@ async function initApp() {
       return;
     }
 
+    // 统一规则：所有音乐会排练档案的列表按照时间从最新到历史的顺序排序 (最新在前)
+    state.concertIndex.sort((a, b) => {
+      const keyA = (a.dateIso || a.date || '').replace(/[^0-9]/g, '');
+      const keyB = (b.dateIso || b.date || '').replace(/[^0-9]/g, '');
+      return keyB.localeCompare(keyA);
+    });
+
     // 2. 渲染顶部下拉选单
     renderConcertSelector();
 
-    // 3. 默认加载第一场音乐会
+    // 3. 默认加载第一场音乐会（最新一场）
     const defaultConcert = state.concertIndex[0];
     await loadConcert(defaultConcert.id);
   } catch (err) {
@@ -127,12 +134,42 @@ async function loadConcert(concertId) {
 }
 
 /**
- * 切换子场次 (如第一场、第二场)
+ * 切换子场次 (如上半场/下半场、第一场/第二场)
  */
 function switchSession(sessIdx) {
   state.activeSessionIndex = sessIdx;
-  renderSessionContent();
+  renderSessionTabs();     // 关键修复：即时重新渲染选项卡高亮态
+  renderSessionContent();  // 渲染该场次的曲目内容与子导航
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/**
+ * 渲染场次选项卡 (Level 2: Sessions)
+ */
+function renderSessionTabs() {
+  const concert = state.concertCache[state.activeConcertId];
+  if (!concert) return;
+
+  const sessions = concert.sessions || [];
+  if (sessions.length > 1) {
+    document.getElementById('sessionsTabBar').classList.remove('hidden');
+    dom.sessionsTabList.innerHTML = sessions.map((sess, idx) => {
+      const isActive = idx === state.activeSessionIndex;
+      return `
+        <button onclick="switchSession(${idx})" class="whitespace-nowrap px-3.5 py-1.5 rounded-lg font-serif transition-all flex items-center gap-1.5 ${
+          isActive
+            ? 'bg-accentGold-500/20 text-accentGold-700 dark:text-accentGold-300 border border-accentGold-500/50 font-bold shadow-sm'
+            : 'text-parchment-600 dark:text-zinc-400 hover:bg-parchment-200/60 dark:hover:bg-obsidian-800/80 font-normal border border-transparent'
+        }">
+          <span class="w-1.5 h-1.5 rounded-full ${isActive ? 'bg-accentGold-500' : 'bg-transparent'}"></span>
+          <span class="font-sans text-[11px] font-semibold">${sess.sessionName || `场次 0${idx + 1}`}</span>
+          <span class="hidden sm:inline text-xs opacity-75">${sess.sessionTheme ? `| ${sess.sessionTheme.split('・')[0]}` : ''}</span>
+        </button>
+      `;
+    }).join('');
+  } else {
+    document.getElementById('sessionsTabBar').classList.add('hidden');
+  }
 }
 
 /**
@@ -180,26 +217,7 @@ function renderConcertView() {
   dom.footerConcertVenue.textContent = `${concert.venue} • ${mainArtist} • ${concert.date ? concert.date.split('（')[0] : ''}`;
 
   // 3. 渲染场次选项卡 (Level 2: Sessions)
-  const sessions = concert.sessions || [];
-  if (sessions.length > 1) {
-    document.getElementById('sessionsTabBar').classList.remove('hidden');
-    dom.sessionsTabList.innerHTML = sessions.map((sess, idx) => {
-      const isActive = idx === state.activeSessionIndex;
-      return `
-        <button onclick="switchSession(${idx})" class="whitespace-nowrap px-3.5 py-1.5 rounded-lg font-serif transition-all flex items-center gap-1.5 ${
-          isActive
-            ? 'bg-accentGold-500/20 text-accentGold-700 dark:text-accentGold-300 border border-accentGold-500/50 font-bold shadow-sm'
-            : 'text-parchment-600 dark:text-zinc-400 hover:bg-parchment-200/60 dark:hover:bg-obsidian-800/80 font-normal'
-        }">
-          <span class="w-1.5 h-1.5 rounded-full ${isActive ? 'bg-accentGold-500' : 'bg-transparent'}"></span>
-          <span class="font-sans text-[11px] font-semibold">${sess.sessionName || `场次 0${idx + 1}`}</span>
-          <span class="hidden sm:inline text-xs opacity-75">${sess.sessionTheme ? `| ${sess.sessionTheme.split('・')[0]}` : ''}</span>
-        </button>
-      `;
-    }).join('');
-  } else {
-    document.getElementById('sessionsTabBar').classList.add('hidden');
-  }
+  renderSessionTabs();
 
   // 4. 渲染场次具体内容
   renderSessionContent();
@@ -222,7 +240,7 @@ function renderSessionContent() {
         <span class="font-mono text-[11px] font-bold text-accentGold-700 dark:text-accentGold-400 uppercase tracking-wider">
           场次研习 • ${session.sessionName || '全场'}
         </span>
-        <span class="text-xs text-parchment-500 dark:text-zinc-400">共 ${session.works.length} 部宏篇杰作</span>
+        <span class="text-xs text-parchment-500 dark:text-zinc-400">共 ${session.works.length} 部杰作</span>
       </div>
       <h2 class="text-base sm:text-lg font-serif font-bold text-parchment-900 dark:text-zinc-100">
         ${session.sessionTheme || ''}
@@ -282,8 +300,8 @@ function renderSessionContent() {
           <span class="font-semibold text-parchment-800 dark:text-[#EAECEF]">${w.year || '不详'}</span>
         </div>
         <div class="col-span-2">
-          <span class="text-parchment-500 dark:text-zinc-400 block text-[10px] font-mono">配器编制 (ORCHESTRATION)</span>
-          <span class="font-medium text-parchment-800 dark:text-[#EAECEF] truncate block" title="${w.instrumentation || ''}">${w.instrumentation || '标准交响乐团'}</span>
+          <span class="text-parchment-500 dark:text-zinc-400 block text-[10px] font-mono">配器 / 编制 (SCORING)</span>
+          <span class="font-medium text-parchment-800 dark:text-[#EAECEF] truncate block" title="${w.instrumentation || ''}">${w.instrumentation || '钢琴独奏'}</span>
         </div>
       </div>
 
@@ -335,7 +353,7 @@ function renderSessionContent() {
         <!-- 分乐章结构拆解与录音试听 -->
         <div class="pt-1">
           <h4 class="text-[11px] font-mono font-bold uppercase tracking-wider text-parchment-500 dark:text-zinc-400 mb-2">
-            分乐章结构与音乐学拆解 (MOVEMENT BREAKDOWN)
+            ${w.movements && w.movements.length > 1 ? '分乐章结构与音乐学拆解 (MOVEMENT BREAKDOWN)' : '曲式架构与音乐学解析 (ANALYSIS & SECTIONS)'}
           </h4>
           
           <div class="space-y-2.5">
@@ -343,7 +361,7 @@ function renderSessionContent() {
               const hasAudio = Boolean(m.audioUrl && m.audioUrl.trim().length > 0);
               const trackData = {
                 title: `${w.composerCn} · ${w.titleCn}`,
-                subtitle: `${m.num} ${m.tempo}`,
+                subtitle: `${m.num ? m.num + ' ' : ''}${m.tempo}`,
                 audioUrl: m.audioUrl || ''
               };
               const trackJson = encodeURIComponent(JSON.stringify(trackData));
@@ -352,9 +370,11 @@ function renderSessionContent() {
                 <details class="group rounded-xl border border-parchment-200 dark:border-obsidian-800 bg-parchment-50/80 dark:bg-obsidian-850 p-3 text-xs" open>
                   <summary class="cursor-pointer font-serif font-bold text-sm text-parchment-900 dark:text-[#F9FAFB] flex items-center justify-between select-none">
                     <div class="flex items-center gap-2 min-w-0">
-                      <span class="px-2 py-0.5 rounded bg-accentGold-500/15 text-accentGold-700 dark:text-accentGold-300 font-mono text-xs font-bold shrink-0">
-                        ${m.num}
-                      </span>
+                      ${m.num ? `
+                        <span class="px-2 py-0.5 rounded bg-accentGold-500/15 text-accentGold-700 dark:text-accentGold-300 font-mono text-xs font-bold shrink-0">
+                          ${m.num}
+                        </span>
+                      ` : ''}
                       <span class="truncate">${m.tempo}</span>
                     </div>
 

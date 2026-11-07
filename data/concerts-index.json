@@ -4,10 +4,23 @@
     "selectorLabel": "2027.01.09 · 深圳音乐厅 · 拉赫林 / 林大叶 / 深交",
     "file": "data/concerts/2027-01-09-sz-marathon.json",
     "date": "2027年1月9日（全天）",
+    "dateIso": "2027-01-09",
     "venue": "深圳音乐厅 · 演奏大厅",
     "city": "中国 · 深圳",
     "title": "小提琴协奏曲马拉松研习指南",
     "subTitle": "Violin Concerto All-Day Marathon Study Guide",
     "featuredArtist": "朱利安·拉赫林 (Julian Rachlin)"
+  },
+  {
+    "id": "zimerman-recital-2026",
+    "selectorLabel": "2026.11.05 · 深圳音乐厅 · 齐默尔曼独奏会",
+    "file": "data/concerts/2026-11-05-zimerman-recital.json",
+    "date": "2026年11月5日 20:00",
+    "dateIso": "2026-11-05",
+    "venue": "深圳音乐厅 · 演奏大厅",
+    "city": "中国 · 深圳",
+    "title": "克里斯蒂安·齐默尔曼钢琴独奏会研习档案",
+    "subTitle": "Krystian Zimerman Piano Recital Study Guide",
+    "featuredArtist": "克里斯蒂安·齐默尔曼 (Krystian Zimerman)"
   }
 ]
