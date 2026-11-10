@@ -40,27 +40,67 @@ async function initHome() {
   }
 }
 
+/**
+ * 判断音乐会是否已演出结束
+ * 规则：根据当前系统时间判断。在演出当天的 23:59:59 之后，自动归入已演出的“历史演出档案”模块
+ */
+function isConcertPast(c) {
+  if (!c) return false;
+  
+  // 1. 提取演出日期的年月日 (优先 dateIso: YYYY-MM-DD，备选从 date 文本正则匹配)
+  let y, m, d;
+  if (c.dateIso && /^\d{4}-\d{2}-\d{2}$/.test(c.dateIso)) {
+    [y, m, d] = c.dateIso.split('-').map(Number);
+  } else if (c.date) {
+    const match = c.date.match(/(\d{4})[年.-](\d{1,2})[月.-](\d{1,2})/);
+    if (match) {
+      y = Number(match[1]);
+      m = Number(match[2]);
+      d = Number(match[3]);
+    }
+  }
+
+  // 若无法解析出具体日期，退守数据源默认 status 字段
+  if (!y || !m || !d) {
+    return c.status === 'past';
+  }
+
+  // 2. 构造演出当天 23:59:59.999 的本地时区截止时间戳
+  const concertEndCutoff = new Date(y, m - 1, d, 23, 59, 59, 999).getTime();
+
+  // 3. 当前系统时间超过演出当天 23:59:59，则自动判定为历史已演演出
+  return Date.now() > concertEndCutoff;
+}
+
+/**
+ * 提取规范的日期排序 Key (YYYY-MM-DD)
+ */
+function getConcertSortKey(c) {
+  if (c.dateIso && /^\d{4}-\d{2}-\d{2}$/.test(c.dateIso)) {
+    return c.dateIso;
+  }
+  if (c.date) {
+    const match = c.date.match(/(\d{4})[年.-](\d{1,2})[月.-](\d{1,2})/);
+    if (match) {
+      return `${match[1]}-${match[2].padStart(2, '0')}-${match[3].padStart(2, '0')}`;
+    }
+  }
+  return (c.date || '').replace(/[^0-9]/g, '');
+}
+
 function renderHomepage() {
   const container = document.getElementById('homeContent');
   if (!container) return;
 
-  // 1. 待演出（按时间正序排列，距离当前最近的排期在前）
+  // 1. 待演出（按当前时间动态判定：在演出当天 23:59 之前的排期；按时间正序排列，距离当前最近的排期在前）
   const upcomingList = homeState.concertIndex
-    .filter(c => c.status !== 'past')
-    .sort((a, b) => {
-      const keyA = (a.dateIso || a.date || '').replace(/[^0-9]/g, '');
-      const keyB = (b.dateIso || b.date || '').replace(/[^0-9]/g, '');
-      return keyA.localeCompare(keyB);
-    });
+    .filter(c => !isConcertPast(c))
+    .sort((a, b) => getConcertSortKey(a).localeCompare(getConcertSortKey(b)));
 
-  // 2. 历史演出（按时间倒序排列，最新结束的演出在前）
+  // 2. 历史演出（按当前时间动态判定：在演出当天 23:59 之后的排期；按时间倒序排列，最新结束的演出在前）
   const pastList = homeState.concertIndex
-    .filter(c => c.status === 'past')
-    .sort((a, b) => {
-      const keyA = (a.dateIso || a.date || '').replace(/[^0-9]/g, '');
-      const keyB = (b.dateIso || b.date || '').replace(/[^0-9]/g, '');
-      return keyB.localeCompare(keyA);
-    });
+    .filter(c => isConcertPast(c))
+    .sort((a, b) => getConcertSortKey(b).localeCompare(getConcertSortKey(a)));
 
   const showUpcoming = homeState.activeFilter === 'all' || homeState.activeFilter === 'upcoming';
   const showPast = homeState.activeFilter === 'all' || homeState.activeFilter === 'past';
@@ -85,7 +125,10 @@ function renderHomepage() {
         </div>
 
         <div class="grid grid-cols-1 gap-3.5">
-          ${upcomingList.map(c => renderConcertCard(c, false)).join('')}
+          ${upcomingList.length > 0
+            ? upcomingList.map(c => renderConcertCard(c, false)).join('')
+            : '<div class="p-8 text-center text-xs sm:text-sm text-parchment-400 dark:text-zinc-500 font-serif bg-white dark:bg-obsidian-900 rounded-2xl border border-dashed border-parchment-200 dark:border-obsidian-800">暂无待演音乐会排期</div>'
+          }
         </div>
       </section>
     ` : ''}
@@ -109,7 +152,10 @@ function renderHomepage() {
         </div>
 
         <div class="grid grid-cols-1 gap-3.5">
-          ${pastList.map(c => renderConcertCard(c, true)).join('')}
+          ${pastList.length > 0
+            ? pastList.map(c => renderConcertCard(c, true)).join('')
+            : '<div class="p-8 text-center text-xs sm:text-sm text-parchment-400 dark:text-zinc-500 font-serif bg-white dark:bg-obsidian-900 rounded-2xl border border-dashed border-parchment-200 dark:border-obsidian-800">暂无历史演出档案</div>'
+          }
         </div>
       </section>
     ` : ''}
