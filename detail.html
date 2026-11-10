@@ -10,8 +10,6 @@
 </head>
 <body class="bg-parchment-50 text-parchment-900 dark:bg-obsidian-950 dark:text-[#EAECEF] font-sans antialiased transition-colors duration-200 min-h-screen pb-28">
 
-  <div id="readProgress" class="fixed top-0 left-0 h-[2px] bg-gradient-to-r from-accentGold-600 via-accentGold-400 to-amber-200 z-50 transition-all duration-100" style="width: 0%;"></div>
-
   <header class="sticky top-0 z-40 bg-parchment-50/95 dark:bg-obsidian-900/95 backdrop-blur-md border-b border-parchment-200 dark:border-obsidian-800">
     <div class="max-w-4xl mx-auto px-4 py-2.5 flex items-center justify-between gap-2">
       <div class="flex items-center gap-2 flex-1 min-w-0 max-w-sm sm:max-w-md">
@@ -55,11 +53,13 @@
       <div id="sessionsTabList" class="flex gap-1.5 py-1.5 overflow-x-auto no-scrollbar text-xs"></div>
     </div>
 
-    <div class="max-w-4xl mx-auto px-4 py-1.5 overflow-x-auto no-scrollbar flex items-center gap-2 border-t border-parchment-100 dark:border-obsidian-850 text-xs" id="worksPillsContainer"></div>
+    <nav id="worksTabBar" class="max-w-4xl mx-auto px-3 sm:px-4 py-2 overflow-x-auto no-scrollbar flex items-center gap-1.5 border-t border-parchment-200 dark:border-obsidian-800 text-xs" aria-label="曲目切换导航">
+      <div id="worksPillsContainer" class="flex items-center gap-1.5 sm:gap-2"></div>
+    </nav>
   </header>
 
   <main class="max-w-4xl mx-auto px-3.5 sm:px-6 pt-4">
-    <section id="concertMasterBanner" class="mb-6 rounded-2xl p-4 sm:p-6 bg-parchment-100/90 dark:bg-obsidian-900 border border-parchment-200 dark:border-zinc-800 card-shadow transition-all">
+    <section id="concertMasterBanner" class="mb-6 rounded-2xl p-4 sm:p-5 bg-white dark:bg-obsidian-900 border border-parchment-200 dark:border-obsidian-800 shadow-sm transition-all">
       <div class="animate-pulse space-y-3">
         <div class="h-4 bg-parchment-300/60 dark:bg-zinc-800 rounded w-1/4"></div>
         <div class="h-7 bg-parchment-300/60 dark:bg-zinc-800 rounded w-2/3"></div>
@@ -121,7 +121,7 @@
     </div>
   </footer>
 
-  <script src="data/concerts-bundle.js?v=20261111_auto_archive"></script>
-  <script src="js/app.js?v=20261111_auto_archive"></script>
+  <script src="data/concerts-bundle.js?v=20261111_single_work_tab"></script>
+  <script src="js/app.js?v=20261111_single_work_tab"></script>
 </body>
 </html>

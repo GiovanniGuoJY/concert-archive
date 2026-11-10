@@ -9,6 +9,7 @@ const state = {
   activeConcertId: null,  // 当前激活的音乐会 ID
   concertCache: {},       // 缓存已拉取的单场音乐会数据 { id: data }
   activeSessionIndex: 0,  // 当前场次索引 (如上半场/下半场，第一场/第二场)
+  activeWorkIndex: 0,     // 当前选中的曲目索引 (Tab 切换)
   isCheatSheetMode: false,// 是否处于 30 秒速查模式
   fontSize: 'standard',   // 字号调节状态 ('standard' | 'medium' | 'large')
   currentAudio: null,     // 当前播放中的音频对象信息
@@ -33,7 +34,6 @@ const dom = {
   fontSizeLabel: document.getElementById('fontSizeLabel'),
   cheatSheetBtn: document.getElementById('cheatSheetBtn'),
   cheatSheetLabel: document.getElementById('cheatSheetLabel'),
-  readProgress: document.getElementById('readProgress'),
   footerConcertVenue: document.getElementById('footerConcertVenue'),
   // 底部音频播放器
   audioBar: document.getElementById('globalAudioBar'),
@@ -53,7 +53,6 @@ const dom = {
 async function initApp() {
   initTheme();
   initFontSize();
-  setupScrollProgress();
   setupAudioPlayerEvents();
 
   try {
@@ -150,6 +149,7 @@ async function handleConcertChange(concertId) {
 async function loadConcert(concertId) {
   state.activeConcertId = concertId;
   state.activeSessionIndex = 0;
+  state.activeWorkIndex = 0;
 
   // 检查前端缓存或本地注入数据
   if (!state.concertCache[concertId]) {
@@ -191,6 +191,7 @@ async function loadConcert(concertId) {
  */
 function switchSession(sessIdx) {
   state.activeSessionIndex = sessIdx;
+  state.activeWorkIndex = 0;
   renderSessionTabs();     // 即时重新渲染选项卡高亮态
   renderSessionContent();  // 渲染该场次的曲目内容与子导航
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -277,14 +278,77 @@ function renderConcertView() {
 /**
  * 渲染选定场次的曲目列表
  */
+/**
+ * 切换选中的曲目 (Tab 切换单曲深度赏析)
+ */
+function switchWork(workIndex) {
+  const concert = state.concertCache[state.activeConcertId];
+  if (!concert || !concert.sessions) return;
+  const sessions = concert.sessions || [];
+  const session = sessions[state.activeSessionIndex] || sessions[0];
+  if (!session || !session.works) return;
+
+  if (workIndex < 0 || workIndex >= session.works.length) return;
+  state.activeWorkIndex = workIndex;
+
+  renderWorkTabs();
+  renderActiveWork();
+
+  // 平滑滚动回曲目顶部
+  const root = document.getElementById('workContentRoot');
+  if (root) {
+    root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // 保证当前曲目 Tab 按钮居中可见
+  const activeTabBtn = document.getElementById(`workTabBtn_${workIndex}`);
+  if (activeTabBtn) {
+    activeTabBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  }
+}
+
+/**
+ * 渲染曲目导航 Tab 栏 (Level 3: Work Tabs)
+ */
+function renderWorkTabs() {
+  const concert = state.concertCache[state.activeConcertId];
+  if (!concert || !concert.sessions) return;
+  const sessions = concert.sessions || [];
+  const session = sessions[state.activeSessionIndex] || sessions[0];
+  if (!session || !session.works) return;
+
+  dom.worksPillsContainer.innerHTML = session.works.map((w, wIdx) => {
+    const isActive = wIdx === state.activeWorkIndex;
+    const composerShort = w.composerCn ? w.composerCn.split('·').pop().trim() : (w.composer || '');
+    const titleShort = w.titleCn.length > 10 ? w.titleCn.slice(0, 9) + '…' : w.titleCn;
+
+    return `
+      <button type="button" onclick="switchWork(${wIdx})" id="workTabBtn_${wIdx}" class="whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-serif transition-all flex items-center gap-1.5 shrink-0 ${
+        isActive
+          ? 'bg-accentGold-500 text-white dark:bg-accentGold-500 dark:text-obsidian-950 font-bold shadow-sm ring-1 ring-accentGold-500/50'
+          : 'bg-parchment-100 dark:bg-obsidian-800 text-parchment-700 dark:text-zinc-300 hover:bg-parchment-200/80 dark:hover:bg-obsidian-750 font-medium border border-parchment-200/80 dark:border-obsidian-700/80'
+      }">
+        <span class="font-mono text-[10px] opacity-75">0${wIdx + 1}</span>
+        <span>${composerShort}</span>
+        <span class="opacity-80 font-sans text-[11px] hidden sm:inline">${titleShort}</span>
+      </button>
+    `;
+  }).join('');
+}
+
+/**
+ * 渲染选定场次的曲目结构与单曲正文
+ */
 function renderSessionContent() {
   const concert = state.concertCache[state.activeConcertId];
   if (!concert || !concert.sessions) return;
   const sessions = concert.sessions || [];
   const session = sessions[state.activeSessionIndex] || sessions[0];
-  if (!session) return;
+  if (!session || !session.works || session.works.length === 0) return;
 
-  // 多场次活动时展示简明场次标识；单场音乐会直接进入曲目，不展示多余的推广引言
+  // 多场次活动时展示简明场次标识；单场音乐会直接进入曲目
   if (sessions.length > 1 && (session.sessionName || session.sessionTheme)) {
     dom.sessionIntroBanner.classList.remove('hidden');
     dom.sessionIntroBanner.innerHTML = `
@@ -302,70 +366,81 @@ function renderSessionContent() {
     dom.sessionIntroBanner.classList.add('hidden');
   }
 
-  // 曲目快速导航胶囊 (Level 3: Works Pills)
-  dom.worksPillsContainer.innerHTML = session.works.map(w => `
-    <a href="#${w.id}" class="whitespace-nowrap px-2.5 py-1 rounded-full bg-parchment-200/60 dark:bg-obsidian-850 text-parchment-800 dark:text-zinc-300 hover:border-accentGold-500/50 font-medium text-[11px] transition-all border border-parchment-300/40 dark:border-obsidian-800 flex items-center gap-1.5">
-      <span class="text-accentGold-600 dark:text-accentGold-400 font-serif">§</span>
-      <span>${w.composerCn ? w.composerCn.split('·').pop() : w.composer}</span>
-      <span class="text-[10px] opacity-60 font-mono">${w.key ? w.key.split(' ')[0] : ''}</span>
-    </a>
-  `).join('');
+  // 1. 渲染顶部曲目 Tab 切换条
+  renderWorkTabs();
 
-  // 渲染曲目详细卡片
-  dom.worksContainer.innerHTML = session.works.map((w, wIdx) => `
-    <article id="${w.id}" class="scroll-mt-32 rounded-2xl bg-white dark:bg-obsidian-900 border border-parchment-200 dark:border-obsidian-800 p-5 sm:p-7 card-shadow transition-all">
+  // 2. 渲染当前选中曲目的完整乐章解析与导赏正文 (去框化优雅排版)
+  renderActiveWork();
+}
+
+/**
+ * 渲染当前激活单曲的全部乐章与学术研习正文（无层叠框框、通透书籍化排版）
+ */
+function renderActiveWork() {
+  const concert = state.concertCache[state.activeConcertId];
+  if (!concert || !concert.sessions) return;
+  const sessions = concert.sessions || [];
+  const session = sessions[state.activeSessionIndex] || sessions[0];
+  if (!session || !session.works || session.works.length === 0) return;
+
+  // 边界保护
+  if (state.activeWorkIndex >= session.works.length) {
+    state.activeWorkIndex = 0;
+  }
+
+  const w = session.works[state.activeWorkIndex];
+  const wIdx = state.activeWorkIndex;
+  const totalWorks = session.works.length;
+
+  dom.worksContainer.innerHTML = `
+    <article id="workContentRoot" class="scroll-mt-28 space-y-6">
       
-      <!-- 曲目头部 -->
-      <div class="border-b border-parchment-100 dark:border-obsidian-800 pb-3.5 mb-4">
-        <div class="flex items-center justify-between text-xs text-accentGold-700 dark:text-accentGold-400 font-mono mb-1">
-          <span>曲目 0${wIdx + 1} / 0${session.works.length}</span>
+      <!-- 曲目头部（大标题、曲目编号与作曲家，不套厚重卡片外框） -->
+      <header class="pb-4 border-b border-parchment-200 dark:border-obsidian-800">
+        <div class="flex items-center justify-between text-xs text-accentGold-700 dark:text-accentGold-400 font-mono mb-2">
+          <span class="font-bold tracking-wider uppercase">曲目 0${wIdx + 1} / 0${totalWorks}</span>
           <span class="bg-accentGold-500/10 px-2.5 py-0.5 rounded-full text-[11px] font-mono">
-            ⏱ 全曲 ${w.duration || '时长未录入'}
+            ⏱ 参考全曲 ${w.duration || '时长未录入'}
           </span>
         </div>
         
-        <h3 class="text-xl sm:text-2xl font-serif font-bold text-parchment-900 dark:text-[#F3F4F6] leading-snug">
+        <h2 class="text-2xl sm:text-3xl font-serif font-bold text-parchment-900 dark:text-[#F3F4F6] tracking-tight leading-snug">
           ${w.titleCn}
-        </h3>
-        <p class="font-serif italic text-sm text-parchment-600 dark:text-zinc-400 mt-0.5">
+        </h2>
+        <p class="font-serif italic text-sm text-parchment-600 dark:text-zinc-400 mt-1 leading-normal">
           ${w.title}
         </p>
         
-        <div class="flex items-center gap-2 mt-2 text-xs font-sans">
-          <span class="font-semibold text-accentGold-700 dark:text-accentGold-300">${w.composerCn}</span>
+        <div class="flex items-center gap-2 mt-2.5 text-xs font-sans">
+          <span class="font-semibold text-accentGold-700 dark:text-accentGold-300 text-sm">${w.composerCn}</span>
           <span class="text-parchment-300 dark:text-zinc-600">|</span>
           <span class="text-parchment-500 dark:text-zinc-400">${w.composer} ${w.dates ? `(${w.dates})` : ''}</span>
         </div>
-      </div>
+      </header>
 
-      <!-- 作品规格元数据 (配器与编制完全展开折行展示，不使用打点折叠) -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 p-3 rounded-xl bg-parchment-100/70 dark:bg-obsidian-950 border border-parchment-200/60 dark:border-obsidian-800 text-[11px] mb-4">
-        <div>
-          <span class="text-parchment-500 dark:text-zinc-400 block text-[10px] font-mono">调性 (KEY)</span>
-          <span class="font-semibold text-parchment-800 dark:text-[#EAECEF] break-words">${w.key || '无'}</span>
+      <!-- 作品规格元数据（轻量展开排版，告别嵌套死板方框） -->
+      <section class="py-3 border-b border-parchment-200/80 dark:border-obsidian-800/80 text-xs text-parchment-700 dark:text-zinc-300 font-sans space-y-2">
+        <div class="flex flex-wrap items-center gap-x-5 gap-y-1.5">
+          <span>调性: <strong class="font-semibold text-parchment-900 dark:text-zinc-100">${w.key || '无'}</strong></span>
+          <span class="text-parchment-300 dark:text-zinc-700">•</span>
+          <span>创作年代: <strong class="font-semibold text-parchment-900 dark:text-zinc-100">${w.year || '不详'}</strong></span>
+          <span class="text-parchment-300 dark:text-zinc-700">•</span>
+          <span>全曲时长: <strong class="font-semibold text-parchment-900 dark:text-zinc-100">${w.duration || '未录入'}</strong></span>
         </div>
-        <div>
-          <span class="text-parchment-500 dark:text-zinc-400 block text-[10px] font-mono">创作年代 (ERA)</span>
-          <span class="font-semibold text-parchment-800 dark:text-[#EAECEF] break-words">${w.year || '不详'}</span>
+        <div class="text-[11px] text-parchment-600 dark:text-zinc-400 leading-relaxed pt-0.5">
+          <span class="font-mono uppercase font-bold text-parchment-500 dark:text-zinc-500">配器 / 编制:</span>
+          <span class="text-parchment-800 dark:text-zinc-200 font-medium ml-1">${w.instrumentation || '标准交响乐团'}</span>
         </div>
-        <div class="col-span-2">
-          <span class="text-parchment-500 dark:text-zinc-400 block text-[10px] font-mono">参考全曲时长 (DURATION)</span>
-          <span class="font-semibold text-parchment-800 dark:text-[#EAECEF]">${w.duration || '时长未录入'}</span>
-        </div>
-        <div class="col-span-2 sm:col-span-4 pt-2 border-t border-parchment-200/60 dark:border-obsidian-800/80">
-          <span class="text-parchment-500 dark:text-zinc-400 block text-[10px] font-mono mb-0.5">配器 / 编制 (SCORING)</span>
-          <span class="font-medium text-parchment-800 dark:text-[#EAECEF] break-words whitespace-normal leading-relaxed block">${w.instrumentation || '标准交响乐团'}</span>
-        </div>
-      </div>
+      </section>
 
-      <!-- 30 秒速查听觉锚点 -->
+      <!-- 30 秒速查听觉锚点（左侧金色引用重音线风格，自然融入正文流） -->
       ${w.cheatSheet && w.cheatSheet.length > 0 ? `
-        <div class="cheat-sheet-box p-3.5 rounded-xl bg-accentGold-500/10 dark:bg-obsidian-950 border border-accentGold-500/30 dark:border-accentGold-500/40 mb-4">
-          <h4 class="text-xs font-bold text-accentGold-700 dark:text-accentGold-300 flex items-center gap-1.5 mb-2 uppercase tracking-wider font-mono">
+        <section class="cheat-sheet-box my-5 pl-4 py-3 pr-3 border-l-2 border-accentGold-500 bg-accentGold-500/5 dark:bg-accentGold-500/10 rounded-r-xl">
+          <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-accentGold-700 dark:text-accentGold-400 flex items-center gap-1.5 mb-2">
             <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/></svg>
             音乐厅 30 秒核心听觉锚点 (Key Anchors)
-          </h4>
-          <ul class="space-y-1.5 text-xs text-parchment-800 dark:text-[#E5E7EB] font-serif">
+          </h3>
+          <ul class="space-y-1.5 text-xs text-parchment-800 dark:text-[#E5E7EB] font-serif leading-relaxed">
             ${w.cheatSheet.map(item => `
               <li class="flex items-start gap-2">
                 <span class="text-accentGold-500 mt-0.5">•</span>
@@ -373,43 +448,45 @@ function renderSessionContent() {
               </li>
             `).join('')}
           </ul>
-        </div>
+        </section>
       ` : ''}
 
-      <!-- 深度音乐学解析区块 (速查模式可折叠) -->
-      <div class="detailed-analysis space-y-4">
+      <!-- 深度音乐学解析区块 (速查模式可一键折叠) -->
+      <div class="detailed-analysis space-y-6">
         
-        <!-- 创作背景 -->
+        <!-- 创作背景与历史语境 -->
         ${w.background ? `
-          <div>
-            <h4 class="text-[11px] font-mono font-bold uppercase tracking-wider text-parchment-500 dark:text-zinc-400 mb-1">
+          <section class="space-y-1.5">
+            <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-parchment-500 dark:text-zinc-400">
               创作背景与历史语境 (GENESIS & CONTEXT)
-            </h4>
+            </h3>
             <p class="text-xs sm:text-sm text-parchment-800 dark:text-[#D1D5DB] font-serif leading-relaxed text-justify">
               ${w.background}
             </p>
-          </div>
+          </section>
         ` : ''}
 
-        <!-- 美学内核 -->
+        <!-- 美学内核与意象 -->
         ${w.aesthetic ? `
-          <div>
-            <h4 class="text-[11px] font-mono font-bold uppercase tracking-wider text-parchment-500 dark:text-zinc-400 mb-1">
+          <section class="space-y-1.5">
+            <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-parchment-500 dark:text-zinc-400">
               美学内核与意象 (AESTHETIC ESSENCE)
-            </h4>
+            </h3>
             <p class="text-xs sm:text-sm text-parchment-800 dark:text-[#D1D5DB] font-serif leading-relaxed text-justify">
               ${w.aesthetic}
             </p>
-          </div>
+          </section>
         ` : ''}
 
-        <!-- 分乐章结构拆解与录音试听 (标题完整换行展示，呈现乐章预计时长) -->
-        <div class="pt-1">
-          <h4 class="text-[11px] font-mono font-bold uppercase tracking-wider text-parchment-500 dark:text-zinc-400 mb-2">
-            ${w.movements && w.movements.length > 1 ? '分乐章结构与音乐学拆解 (MOVEMENT BREAKDOWN)' : '曲式架构与音乐学深度导赏 (ANALYSIS & SECTIONS)'}
-          </h4>
+        <!-- 分乐章结构拆解与录音试听 (章节式展开，去盒去边框) -->
+        <section class="pt-2">
+          <div class="pb-2 mb-2 border-b border-parchment-200 dark:border-obsidian-800">
+            <h3 class="text-xs font-mono font-bold uppercase tracking-wider text-parchment-500 dark:text-zinc-400">
+              ${w.movements && w.movements.length > 1 ? '分乐章结构与音乐学拆解 (MOVEMENT BREAKDOWN)' : '曲式架构与音乐学深度导赏 (ANALYSIS & SECTIONS)'}
+            </h3>
+          </div>
           
-          <div class="space-y-2.5">
+          <div class="divide-y divide-parchment-200/70 dark:divide-obsidian-800/70">
             ${(w.movements || []).map((m, mIdx) => {
               const hasAudio = Boolean(m.audioUrl && m.audioUrl.trim().length > 0);
               const trackData = {
@@ -420,15 +497,19 @@ function renderSessionContent() {
               const trackJson = encodeURIComponent(JSON.stringify(trackData));
 
               return `
-                <details class="group rounded-xl border border-parchment-200 dark:border-obsidian-800 bg-parchment-50/80 dark:bg-obsidian-850 p-3 text-xs" open>
-                  <summary class="cursor-pointer font-serif font-bold text-sm text-parchment-900 dark:text-[#F9FAFB] flex items-start sm:items-center justify-between gap-3 select-none py-0.5">
+                <section class="py-4 sm:py-5 space-y-2.5">
+                  
+                  <!-- 乐章标题行与录音试听按钮 -->
+                  <div class="flex items-start justify-between gap-3">
                     <div class="flex flex-wrap items-baseline gap-2 min-w-0 flex-1">
                       ${m.num ? `
                         <span class="px-2 py-0.5 rounded bg-accentGold-500/15 text-accentGold-700 dark:text-accentGold-300 font-mono text-xs font-bold shrink-0">
                           ${m.num}
                         </span>
                       ` : ''}
-                      <span class="break-words font-semibold text-xs sm:text-sm leading-snug">${m.tempo}</span>
+                      <h4 class="font-serif font-bold text-sm sm:text-base text-parchment-900 dark:text-[#F9FAFB] leading-snug">
+                        ${m.tempo}
+                      </h4>
                       ${m.duration ? `
                         <span class="text-[10px] sm:text-[11px] font-mono font-normal text-accentGold-700 dark:text-accentGold-400 bg-accentGold-500/10 px-2 py-0.5 rounded-full shrink-0">
                           ⏱ ${m.duration}
@@ -436,40 +517,56 @@ function renderSessionContent() {
                       ` : ''}
                     </div>
 
-                    <div class="flex items-center gap-2 shrink-0 pt-0.5 sm:pt-0">
-                      <!-- 录音试听控制钮 -->
-                      ${hasAudio ? `
-                        <button type="button" onclick="playMovementAudio(event, '${trackJson}')" class="px-2.5 py-0.5 rounded-full bg-accentGold-500/20 hover:bg-accentGold-500 text-accentGold-800 dark:text-accentGold-300 hover:text-white dark:hover:text-obsidian-950 font-sans text-[11px] font-medium flex items-center gap-1 transition-all">
-                          <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M4.5 3.5v13l11-6.5-11-6.5z"/></svg>
-                          <span>录音</span>
-                        </button>
-                      ` : ''}
-                      <span class="text-parchment-400 dark:text-zinc-500 group-open:rotate-180 transition-transform text-xs font-mono">▾</span>
-                    </div>
-                  </summary>
-                  
-                  <div class="mt-2.5 pt-2.5 border-t border-parchment-200/80 dark:border-obsidian-800 space-y-2">
-                    <div class="flex flex-wrap gap-x-4 gap-y-1 text-[11px]">
-                      ${m.duration ? `<span class="text-parchment-600 dark:text-zinc-400">预计时长: <strong class="text-accentGold-700 dark:text-accentGold-300 font-mono font-semibold">${m.duration}</strong></span>` : ''}
-                      ${m.meter ? `<span class="text-parchment-600 dark:text-zinc-400">节拍: <strong class="text-parchment-900 dark:text-[#F3F4F6] font-sans font-semibold">${m.meter}</strong></span>` : ''}
-                      ${m.form ? `<span class="text-parchment-600 dark:text-zinc-400">曲式架构: <strong class="text-accentGold-700 dark:text-accentGold-300 font-sans font-semibold">${m.form}</strong></span>` : ''}
-                      ${m.affekt ? `<span class="text-parchment-600 dark:text-zinc-400">情态表情: <strong class="text-parchment-900 dark:text-[#F3F4F6] font-serif italic">${m.affekt}</strong></span>` : ''}
-                    </div>
-                    
-                    <div class="p-3.5 rounded-lg bg-parchment-100/90 dark:bg-obsidian-950 border border-parchment-200/70 dark:border-obsidian-800 text-xs sm:text-sm text-parchment-800 dark:text-[#E2E8F0] font-serif leading-relaxed text-justify space-y-2">
-                      ${m.highlights}
-                    </div>
+                    <!-- 录音试听控制钮 (仅在有音频时常驻呈现) -->
+                    ${hasAudio ? `
+                      <button type="button" onclick="playMovementAudio(event, '${trackJson}')" class="px-2.5 py-1 rounded-full bg-accentGold-500/20 hover:bg-accentGold-500 text-accentGold-800 dark:text-accentGold-300 hover:text-white dark:hover:text-obsidian-950 font-sans text-[11px] font-semibold flex items-center gap-1.5 transition-all shadow-sm shrink-0 active:scale-95">
+                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M4.5 3.5v13l11-6.5-11-6.5z"/></svg>
+                        <span>录音试听</span>
+                      </button>
+                    ` : ''}
                   </div>
-                </details>
+
+                  <!-- 乐章属性参数（节拍、曲式、情态），以轻巧行展开，不加边框盒子 -->
+                  ${(m.meter || m.form || m.affekt || m.duration) ? `
+                    <div class="flex flex-wrap gap-x-4 gap-y-1 text-[11px] font-sans text-parchment-600 dark:text-zinc-400 pt-0.5">
+                      ${m.meter ? `<span>节拍: <strong class="text-parchment-800 dark:text-zinc-200 font-medium">${m.meter}</strong></span>` : ''}
+                      ${m.form ? `<span>曲式: <strong class="text-accentGold-700 dark:text-accentGold-300 font-medium">${m.form}</strong></span>` : ''}
+                      ${m.affekt ? `<span>情态: <strong class="text-parchment-800 dark:text-zinc-200 font-serif italic">${m.affekt}</strong></span>` : ''}
+                    </div>
+                  ` : ''}
+
+                  <!-- 音乐学导赏重点正文 (无内层嵌套小框，文字自由舒展) -->
+                  <div class="text-xs sm:text-sm text-parchment-800 dark:text-[#E2E8F0] font-serif leading-relaxed text-justify pt-1 space-y-2">
+                    ${m.highlights}
+                  </div>
+
+                </section>
               `;
             }).join('')}
           </div>
-        </div>
+        </section>
 
       </div>
 
+      <!-- 底部翻曲导航（上一曲 / 下一曲便捷通道） -->
+      <nav class="flex items-center justify-between gap-3 pt-6 mt-8 border-t border-parchment-200 dark:border-obsidian-800 text-xs font-serif" aria-label="曲目翻页">
+        ${wIdx > 0 ? `
+          <button type="button" onclick="switchWork(${wIdx - 1})" class="px-3.5 py-2 rounded-xl border border-parchment-300 dark:border-obsidian-750 hover:border-accentGold-500/60 bg-white dark:bg-obsidian-900 text-parchment-800 dark:text-zinc-200 hover:text-accentGold-700 dark:hover:text-accentGold-400 flex items-center gap-1.5 transition-all shadow-sm active:scale-95">
+            <span>←</span>
+            <span class="max-w-[120px] sm:max-w-xs truncate">上一曲: ${session.works[wIdx - 1].titleCn}</span>
+          </button>
+        ` : '<div></div>'}
+
+        ${wIdx < totalWorks - 1 ? `
+          <button type="button" onclick="switchWork(${wIdx + 1})" class="px-3.5 py-2 rounded-xl bg-accentGold-500/15 hover:bg-accentGold-500 text-accentGold-800 dark:text-accentGold-300 hover:text-white dark:hover:text-obsidian-950 border border-accentGold-500/40 font-semibold flex items-center gap-1.5 transition-all shadow-sm active:scale-95 ml-auto">
+            <span class="max-w-[120px] sm:max-w-xs truncate">下一曲: ${session.works[wIdx + 1].titleCn}</span>
+            <span>→</span>
+          </button>
+        ` : '<div></div>'}
+      </nav>
+
     </article>
-  `).join('');
+  `;
 
   // 保持当前的速查模式展开/收起状态
   if (state.isCheatSheetMode) {
@@ -659,17 +756,7 @@ function initTheme() {
   }
 }
 
-/**
- * 顶部阅读进度条
- */
-function setupScrollProgress() {
-  window.addEventListener('scroll', () => {
-    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
-    dom.readProgress.style.width = scrolled + '%';
-  });
-}
+
 
 function showEmptyState(msg) {
   dom.worksContainer.innerHTML = `
